@@ -1,0 +1,11 @@
+{
+  "extends": ["./node_modules/enferm-codestyle/eslintrc"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "ignorePatterns": ["build/*", "config/*", "public/*", "src/icons/*"]
+}

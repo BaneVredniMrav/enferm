@@ -1,0 +1,37 @@
+{
+   "longDayShift": {
+      "startTime": "08:30",
+      "endTime": "20:00"
+   },
+   "status": [
+      "Unfilled",
+      "Booked",
+      "Amendment Pending",
+      "Recovery Pending",
+      "In Progress",
+      "Awaiting Candidate",
+      "Awaiting Client",
+      "Awaiting Agency",
+      "Timesheet Rejected",
+      "In Query",
+      "Invoiced",
+      "Cancellation Pending",
+      "Canceled",
+      "Never Filled",
+      "Completed",
+      "Amendment Required"
+   ],
+   "availabilitySegments": {
+      "early": 2,
+      "late": 3,
+      "longDay": 4,
+      "night": 5,
+      "twilight": 6
+   },
+   "unavailabilitySegments": {
+      "Holiday": 1,
+      "Sic day": 2,
+      "Maternity/Paternity": 3,
+      "Other": 4
+   }
+}

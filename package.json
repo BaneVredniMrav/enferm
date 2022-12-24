@@ -1,0 +1,24 @@
+{
+  "name": "enferm",
+  "version": "1.0.0",
+  "description": "Automation tests for enferm. portal",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx cypress open",
+    "open-stage": "node_modules/.bin/cypress open",
+    "test": "npx cypress run"
+  },
+  "keywords": [],
+  "author": "Branko Stanković",
+  "license": "ISC",
+  "dependencies": {
+    "enferm-codestyle": "git+ssh://git@bitbucket.org/enferm/fecodestyle.git#1.0.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "cypress": "^12.4.1",
+    "cypress-dotenv": "^2.0.0",
+    "dotenv": "^16.0.3",
+    "prettier": "^2.8.3"
+  }
+}

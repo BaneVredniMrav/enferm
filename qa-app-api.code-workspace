@@ -1,0 +1,18 @@
+{
+   "folders": [
+      {
+         "path": "."
+      }
+   ],
+   "settings": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true,
+      "workbench.editor.enablePreview": false,
+      "prettier.singleQuote": true,
+      "prettier.semi": false,
+      "prettier.trailingComma": "none",
+      "prettier.arrowParens": "always",
+      "prettier.tabWidth": 3,
+      "prettier.bracketSpacing": true
+   }
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "./node_modules/enferm-codestyle/tsconfig",
+  "compilerOptions": {
+    "declarationDir": "./dist/types",
+    "outDir": "./dist/"
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js"],
+  "exclude": [
+    "node_modules",
+    "**/__tests__/**",
+    "config",
+    "mocks",
+    "build",
+    "dist"
+  ]
+}

@@ -1,4 +1,6 @@
+
 node_modules/
+
 **/cypress/videos
 **/cypress/screenshots
 coverage/
@@ -7,7 +9,9 @@ dist/
 .cache/
 .vscode/
 cypress-coverage/
-yarn.lock
+
+cypress/downloads/*
+
 .parcel-cache
 .DS_Store
 .env

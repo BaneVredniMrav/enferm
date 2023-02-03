@@ -1,20 +1,40 @@
 
+# Directories
+### IDE
+.vscode/
+.idea/
+
+
+### Dependency directories
 node_modules/
 
-**/cypress/videos
-**/cypress/screenshots
+### Build output
+dist/
+
 coverage/
 .nyc_output/
-dist/
 .cache/
-.vscode/
+.parcel-cache
 cypress-coverage/
 
-cypress/downloads/*
-
-.parcel-cache
+# Files
 .DS_Store
-.env
+### Environment
 cypress.env.json
-cypress*
+.env
 .env*
+
+### Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# Cypress
+
+**/cypress/videos
+/cypress/screenshots
+cypress/downloads/
+cypress

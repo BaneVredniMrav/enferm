@@ -1,8 +1,9 @@
-import GlobalSelectors from '../../pageObjects/globalSelectors/globalSelectors'
 import ReportsPage from '../../pageObjects/reportsSelectors/reportsPageSelectors'
+import HttpStatusCode from '../../general/HttpStatusCode'
+import Dropdown from '../../pageObjects/componentSelectors/dropdownSelectors'
 
 const reportsPage = new ReportsPage()
-const globalSelectors = new GlobalSelectors()
+const dropdownSelectors = new Dropdown()
 
 Cypress.Commands.add('interceptReportsPageRequests', () => {
   cy.intercept('GET', '/api/v1/profile?*').as('getProfile')
@@ -13,8 +14,12 @@ Cypress.Commands.add('interceptReportsPageRequests', () => {
 
 Cypress.Commands.add('visitReportsPage', () => {
   cy.visit('/reports')
-  cy.wait('@getProfile').its('response.statusCode').should('eq', 200)
-  cy.wait('@getAgencies').its('response.statusCode').should('eq', 200)
+  cy.wait('@getProfile')
+    .its('response.statusCode')
+    .should('eq', HttpStatusCode.OK)
+  cy.wait('@getAgencies')
+    .its('response.statusCode')
+    .should('eq', HttpStatusCode.OK)
 })
 
 Cypress.Commands.add('generatePayrollReport', () => {
@@ -57,7 +62,7 @@ Cypress.Commands.add('generateCancellationsReport', () => {
   reportsPage.getTodaysDate().click({ force: true })
   reportsPage.getTodaysDate().click({ force: true })
   reportsPage.getClientsField().click({ force: true })
-  globalSelectors.getDropdownLevel0().first().click({ force: true })
+  dropdownSelectors.getDropdownLevel0().first().click({ force: true })
   reportsPage.getFilterButton().click({ force: true })
   cy.wait(1000)
   reportsPage.getGenerateReportButton().click({ force: true })

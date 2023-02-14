@@ -1,10 +1,10 @@
 //login session
 const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/
 Cypress.on('uncaught:exception', (err) => {
-   /* returning false here prevents Cypress from failing the test */
-   if (resizeObserverLoopErrRe.test(err.message)) {
-      return false
-   }
+  /* returning false here prevents Cypress from failing the test */
+  if (resizeObserverLoopErrRe.test(err.message)) {
+    return false
+  }
 })
 
 // ***********************************************************
@@ -23,7 +23,9 @@ Cypress.on('uncaught:exception', (err) => {
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands/globalCommands/globalCommands'
+
+// UI commands
+import './commands/componentCommands/globalCommands'
 import './commands/loginCommands/loginCommands'
 import './commands/candidatesCommands/candidatesCommands'
 import './commands/candidatesCommands/candidateCalendarCommands'
@@ -31,7 +33,9 @@ import './commands/usersCommands/usersCommands'
 import './commands/clientsCommands/clientsCommands'
 import './commands/shiftScheduleCommands/shiftScheduleCommands'
 import './commands/shiftScheduleCommands/newShiftCommands'
-import './commands/documentsCommands/documentsCommands'
+import './commands/documentsCommands/documentsByDocument'
+import './commands/documentsCommands/documentsByCandidate'
+import './commands/documentsCommands/documentsSettingsCommands'
 import './commands/settingsCommands/settingsRegionsCommands'
 import './commands/settingsCommands/settingsRateSplitsCommands'
 import './commands/settingsCommands/settingsRolesCommands'
@@ -39,14 +43,24 @@ import './commands/settingsCommands/settingsBandsCommands'
 import './commands/mailhogCommands/mailhogCommands'
 import './commands/ratesCommands/ratesCommands'
 import './commands/reportsCommands/reportsCommands'
-import './commands/APIcommands/APIcandidatesCommands'
-import './commands/APIcommands/APILoginCommands'
-import './commands/APIcommands/APIusersCommands'
-import './commands/APIcommands/APIclientsCommands'
-import './commands/APIcommands/APImailhogCommands'
-import './commands/APIcommands/APIdocumentsCommands'
-import './commands/APIcommands/APIsettingsCommands'
-import './commands/APIcommands/APIshiftScheduleCommands'
+
+// API commands
+import './commands/APIcommands/APIcandidatesCommands/APIcandidatesCommands'
+import './commands/APIcommands/APIloginCommands/APILoginCommands'
+import './commands/APIcommands/APIusersCommands/APIusersCommands'
+import './commands/APIcommands/APIclientsCommands/APIclientsCommands'
+import './commands/APIcommands/APImailhogCommands/APImailhogCommands'
+import './commands/APIcommands/APIdocumentsCommands/APIdocumentsCommands'
+import './commands/APIcommands/APIsettingsCommands/APIbandsCommands'
+import './commands/APIcommands/APIsettingsCommands/APIregionsCommands'
+import './commands/APIcommands/APIsettingsCommands/APIrateSplitsCommands'
+import './commands/APIcommands/APIsettingsCommands/APIrolesCommands'
+import './commands/APIcommands/APIshiftScheduleCommands/APInewShiftCommands'
+import './commands/APIcommands/APIratesCommands/APIratesCommands'
+
+// Candidate Onboarding
+import './commands/candidateOnboarding/onboardingGlobalCommands'
+import './commands/candidateOnboarding/onboardingStepOneCommands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

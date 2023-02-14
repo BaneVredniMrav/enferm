@@ -1,46 +1,9 @@
-class DocumentsPage {
-  getNewDocumentButton() {
-    return cy.get('.cta-btn', { timeout: 10000 })
-  }
-
-  getDocumentNameField() {
-    return cy.get(':nth-child(2) > .sidebar-form_input', { timeout: 10000 })
-  }
-
-  getRequiredRadio() {
-    return cy.get(':nth-child(3) > .sidebar-form_label > .sidebar-form_input', {
-      timeout: 10000
-    })
-  }
-
-  getHasExpiryRadio() {
-    return cy.get(':nth-child(4) > .sidebar-form_label > .sidebar-form_input', {
-      timeout: 10000
-    })
-  }
-
-  getSaveButton() {
-    return cy.get('.btn', { timeout: 10000 })
-  }
-
-  getDispalayedDocumentName() {
-    return cy.get(
-      '.table__body > :nth-child(1) > :nth-child(2) > :nth-child(1) > div',
-      { timeout: 10000 }
-    )
-  }
-
+class DocumentsByCandidatePage {
   getActionsButton() {
     return cy.get(
       '.action__dropdown > .vue-treeselect__control > .vue-treeselect__value-container > .vue-treeselect__input-container',
       { timeout: 10000 }
     )
-  }
-
-  getConfirmDeletionButton() {
-    return cy.get('.delete-container__controls__btn--delete', {
-      timeout: 10000
-    })
   }
 
   getDocumentCard() {
@@ -69,6 +32,10 @@ class DocumentsPage {
     })
   }
 
+  getUploadedDocument() {
+    return cy.get('.upload-item__name', { timeout: 10000 })
+  }
+
   getCheckmarkCircle() {
     return cy.get(
       '.compliance-list__group-item .svg-icon.svg-fill > g > circle',
@@ -86,6 +53,13 @@ class DocumentsPage {
       { timeout: 10000 }
     )
   }
+
+  getDisplayedDocumentName() {
+    return cy.get(
+      '.table__body > :nth-child(1) > :nth-child(2) > :nth-child(1) > div',
+      { timeout: 10000 }
+    )
+  }
 }
 
-export default DocumentsPage
+export default DocumentsByCandidatePage

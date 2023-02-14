@@ -1,54 +1,53 @@
 import { candidate1, client1, band, role } from '../../../fixtures/fakes'
-import GlobalSelectors from '../../pageObjects/globalSelectors/globalSelectors'
 import NewShiftPage from '../../pageObjects/shiftScheduleSelectors/newShiftPageSelectors'
 import ShiftSchedulePage from '../../pageObjects/shiftScheduleSelectors/shiftScheduleSelectors'
 
 const shiftSchedulePage = new ShiftSchedulePage()
 const newShiftPage = new NewShiftPage()
-const globalSelectors = new GlobalSelectors()
 
-Cypress.Commands.add('createShiftRegular', (startTime, endTime) => {
-   let date = new Date()
-   let today = date.toISOString().split('T')[0]
-   date.setDate(date.getDate() + 1)
-   let tomorrow = date.toISOString().split('T')[0]
-   //First step of creating new shift
-   shiftSchedulePage.getNewShiftButton().click({ force: true })
-   newShiftPage.getClientField().click({ force: true })
-   globalSelectors
-      .getDropdownLevel0()
-      .contains(client1.clientName)
+Cypress.Commands.add('assignShiftToCandidate', (shiftSegment) => {
+  let date = new Date()
+  let today = date.toISOString().split('T')[0]
+  date.setDate(date.getDate() + 1)
+  let tomorrow = date.toISOString().split('T')[0]
+  //First step of creating new shift
+  shiftSchedulePage.getNewShiftButton().click({ force: true })
+  newShiftPage.getClientField().click({ force: true })
+  cy.selectItemFromDropdownLevel0(client1.trustName)
+  cy.selectItemFromDropdownLevel1(client1.hospitalName)
+  cy.selectItemFromDropdownLevel2(client1.wardName)
+  newShiftPage.getRoleField().click({ force: true })
+  cy.selectItemFromDropdownLevel0(role)
+  newShiftPage.getBandField().click({ force: true })
+  cy.selectItemFromDropdownLevel0(band)
+  newShiftPage.getBrakeField().clear().type(60, { force: true })
+  newShiftPage.getNextButton().contains('Next').click({ force: true })
+  // Second step of creating new shift
+  newShiftPage.getStartTimeField().click({ force: true })
+  cy.selectItemFromDropdownLevel0(shiftSegment.startTime)
+  newShiftPage.getEndTimeField().click({ force: true })
+  cy.selectItemFromDropdownLevel0(shiftSegment.endTime)
+  newShiftPage.getTodayDate(tomorrow).first().click({ force: true })
+  newShiftPage
+    .getPOField()
+    .type(`${today}/${shiftSegment.startTime}`, { force: true })
+  newShiftPage.getNextButton().contains('Next').click({ force: true })
+  let startTime = parseInt(shiftSegment.startTime)
+  let endTime = parseInt(shiftSegment.endTime)
+  let duration = endTime - startTime
+  if (duration < 0) {
+    duration += 24
+  }
+  if (duration >= 13) {
+    newShiftPage
+      .getConfirmDurationButton()
+      .contains('Continue')
       .click({ force: true })
-   globalSelectors
-      .getDropdownLevel1()
-      .contains(client1.clientName)
-      .click({ force: true })
-   globalSelectors
-      .getDropdownLevel2()
-      .contains(client1.clientName)
-      .click({ force: true })
-   newShiftPage.getRoleField().click({ force: true })
-   globalSelectors.getDropdownLevel0().contains(role).click({ force: true })
-   newShiftPage.getBandField().click({ force: true })
-   globalSelectors.getDropdownLevel0().contains(band).click({ force: true })
-   newShiftPage.getBrakeField().clear().type(60, { force: true })
-   newShiftPage.getNextButton().contains('Next').click({ force: true })
-   // Second step of creating new shift
-   newShiftPage.getStartTimeField().click({ force: true })
-   globalSelectors
-      .getDropdownLevel0()
-      .contains(startTime)
-      .click({ force: true })
-   newShiftPage.getEndTimeField().click({ force: true })
-   globalSelectors.getDropdownLevel0().contains(endTime).click({ force: true })
-   newShiftPage.getTodayDate(tomorrow).first().click({ force: true })
-   newShiftPage.getPOField().type(`${today}/${startTime}`, { force: true })
-   newShiftPage.getNextButton().contains('Next').click({ force: true })
-   // shiftSchedulePage.getConfirmDurationButton().contains('Continue').click({ force: true });
-   //Third step of creating new shift
-   newShiftPage
-      .getAvailableCandidate()
-      .contains(candidate1.candidateFirstName)
-      .click({ force: true })
-   // shiftSchedulePage.getSubmitShiftButton().click({ force: true });
+  }
+  //Third step of creating new shift
+  newShiftPage
+    .getAvailableCandidate()
+    .contains(candidate1.candidateFirstName)
+    .click({ force: true })
+  newShiftPage.getSubmitShiftButton().click({ force: true })
 })

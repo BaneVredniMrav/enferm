@@ -1,7 +1,7 @@
 {
-  "name": "enferm",
+  "name": "e2e",
   "version": "1.0.0",
-  "description": "Automation tests for enferm. portal",
+  "description": "Automation e2e tests for enferm. portal",
   "main": "index.js",
   "scripts": {
     "start": "npx cypress open",
@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
-    "cypress": "^12.4.1",
+    "cypress": "^12.5.1",
     "cypress-dotenv": "^2.0.0",
     "dotenv": "^16.0.3",
     "prettier": "^2.8.3"

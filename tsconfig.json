@@ -4,7 +4,7 @@
     "declarationDir": "./dist/types",
     "outDir": "./dist/"
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "exclude": [
     "node_modules",
     "**/__tests__/**",

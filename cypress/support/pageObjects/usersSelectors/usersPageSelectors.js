@@ -63,13 +63,6 @@ class UsersPage {
   getDisplayedUserRole() {
     return cy.get('.table__header > :nth-child(5) > span', { timeout: 10000 })
   }
-
-  getActionsButton() {
-    return cy.get(
-      '.action__dropdown > .vue-treeselect__control > .vue-treeselect__value-container > .vue-treeselect__input-container',
-      { timeout: 10000 }
-    )
-  }
 }
 
 export default UsersPage

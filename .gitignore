@@ -10,15 +10,15 @@ node_modules/
 
 ### Build output
 dist/
-
-coverage/
 .nyc_output/
 .cache/
 .parcel-cache
+coverage/
 cypress-coverage/
 
 # Files
 .DS_Store
+
 ### Environment
 cypress.env.json
 .env
@@ -31,10 +31,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
 # Cypress
-
 **/cypress/videos
-/cypress/screenshots
-cypress/downloads/
-cypress
+**/cypress/screenshots
+**/cypress/downloads
+
+# Development / Research
+dev/

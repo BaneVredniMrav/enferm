@@ -14,12 +14,6 @@ class RatesPage {
     )
   }
 
-  getDropdownLabel() {
-    return cy.get('.label-text', {
-      timeout: 10000
-    })
-  }
-
   getShiftTimeDropdown() {
     return cy.get(':nth-child(1) > .columns .vue-treeselect__multi-value', {
       timeout: 10000

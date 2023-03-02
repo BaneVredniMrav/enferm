@@ -1,12 +1,5 @@
 import RatesPage from '../../pageObjects/ratesSelectors/ratesPageSelectors'
-import {
-  client1,
-  candidate1,
-  getDay,
-  role,
-  band,
-  rates
-} from '../../../fixtures/fakes'
+import { getDay, role, band, rates } from '../../../fixtures/fakes'
 import HttpStatusCode from '../../general/HttpStatusCode'
 import Dropdown from '../../pageObjects/componentSelectors/dropdownSelectors'
 import Sidebar from '../../pageObjects/componentSelectors/sidebarSelectors'
@@ -62,7 +55,7 @@ Cypress.Commands.add('visitRatesPage', () => {
     .should('eq', HttpStatusCode.OK)
 })
 
-Cypress.Commands.add('createTrustRate', () => {
+Cypress.Commands.add('createTrustRate', (client) => {
   cy.wait(1500)
   ratesPage.getNewRateButton().click({ force: true })
   cy.wait('@getSidebarClients')
@@ -70,9 +63,9 @@ Cypress.Commands.add('createTrustRate', () => {
     .should('eq', HttpStatusCode.OK)
   cy.wait(500)
   ratesPage.getClientField().click({ force: true })
-  ratesPage
+  dropdownSelectors
     .getDropdownLabel()
-    .contains(client1.trustName)
+    .contains(client.trustName)
     .click({ force: true })
   ratesPage.getShiftTimeDropdown().click({ force: true })
   dropdownSelectors.getDropdownLevel0().first().click({ force: true })
@@ -102,127 +95,139 @@ Cypress.Commands.add('createTrustRate', () => {
     })
 })
 
-Cypress.Commands.add('createSpecificCandidateTrustRate', () => {
-  cy.wait(1500)
-  ratesPage.getNewRateButton().click({ force: true })
-  cy.wait('@getSidebarClients')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  cy.wait(500)
-  ratesPage.getClientField().click({ force: true })
-  ratesPage
-    .getDropdownLabel()
-    .contains(client1.trustName)
-    .click({ force: true })
-  ratesPage.getShiftTimeDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(`${client1.trustName} Day`)
-  ratesPage.getDayDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(getDay())
-  ratesPage.getRoleDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(role)
-  ratesPage.getBandDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(band)
-  ratesPage.getEmploymentTypeDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0('Umbrella')
-  ratesPage.getCandidateDropdown().click({ force: true })
-  ratesPage
-    .getCandidateDropdown()
-    .find('input')
-    .type(`${candidate1.candidateFirstName}{enter}`, { force: true })
-  cy.wait('@getCandidate')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  ratesPage
-    .getCandidateLabel()
-    .contains(candidate1.candidateFirstName)
-    .click({ force: true })
-  cy.get('body').type('{esc}')
-  cy.get('body').type('{esc}')
-  ratesPage.getPayRateField().clear().type(rates.trustPayRate, { force: true })
-  ratesPage.getChargeField().clear().type(rates.trustPayCharge, { force: true })
-  ratesPage.getCreateButton().click({ force: true })
-  cy.wait('@postRate')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.CREATED)
-  cy.wait(1000)
-  paginationSelectors.getLastPage().click({ force: true })
-  cy.wait(1500)
-  ratesPage
-    .getDisplayedCharge()
-    .last()
-    .then((text) => {
-      const current = text.text().trim()
-      expect(current).to.equal(`£ ${rates.trustPayCharge}`)
-    })
-})
+Cypress.Commands.add(
+  'createSpecificCandidateTrustRate',
+  (client, candidate) => {
+    cy.wait(1500)
+    ratesPage.getNewRateButton().click({ force: true })
+    cy.wait('@getSidebarClients')
+      .its('response.statusCode')
+      .should('eq', HttpStatusCode.OK)
+    cy.wait(500)
+    ratesPage.getClientField().click({ force: true })
+    dropdownSelectors
+      .getDropdownLabel()
+      .contains(client.trustName)
+      .click({ force: true })
+    ratesPage.getShiftTimeDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0(`${client.trustName} Day`)
+    ratesPage.getDayDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0(getDay())
+    ratesPage.getRoleDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0(role)
+    ratesPage.getBandDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0(band)
+    ratesPage.getEmploymentTypeDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0('Umbrella')
+    ratesPage.getCandidateDropdown().click({ force: true })
+    ratesPage
+      .getCandidateDropdown()
+      .find('input')
+      .type(`${candidate.candidateFirstName}{enter}`, { force: true })
+    cy.wait('@getCandidate')
+      .its('response.statusCode')
+      .should('eq', HttpStatusCode.OK)
+    ratesPage
+      .getCandidateLabel()
+      .contains(candidate.candidateFirstName)
+      .click({ force: true })
+    cy.get('body').type('{esc}')
+    cy.get('body').type('{esc}')
+    ratesPage
+      .getPayRateField()
+      .clear()
+      .type(rates.trustPayRate, { force: true })
+    ratesPage
+      .getChargeField()
+      .clear()
+      .type(rates.trustPayCharge, { force: true })
+    ratesPage.getCreateButton().click({ force: true })
+    cy.wait('@postRate')
+      .its('response.statusCode')
+      .should('eq', HttpStatusCode.CREATED)
+    cy.wait(1000)
+    paginationSelectors.getLastPage().click({ force: true })
+    cy.wait(1500)
+    ratesPage
+      .getDisplayedCharge()
+      .last()
+      .then((text) => {
+        const current = text.text().trim()
+        expect(current).to.equal(`£ ${rates.trustPayCharge}`)
+      })
+  }
+)
 
-Cypress.Commands.add('createSpecificCandidateHospitalRate', () => {
-  cy.wait(1500)
-  ratesPage.getNewRateButton().click({ force: true })
-  cy.wait('@getSidebarClients')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  cy.wait(500)
-  ratesPage.getClientField().click({ force: true })
-  ratesPage.getDropdownLabel().each((el, i) => {
-    const trust = el.text().trim()
-    if (trust === client1.trustName) {
-      dropdownSelectors.getDropdownArrowLevel0().eq(i).click({ force: true })
-    }
-  })
-  ratesPage
-    .getDropdownLabel()
-    .contains(client1.hospitalName)
-    .click({ force: true })
-  ratesPage.getShiftTimeDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(`${client1.hospitalName} Day`)
-  ratesPage.getDayDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(getDay())
-  ratesPage.getRoleDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(role)
-  ratesPage.getBandDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(band)
-  ratesPage.getEmploymentTypeDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0('Umbrella')
-  ratesPage.getCandidateDropdown().click({ force: true })
-  ratesPage
-    .getCandidateDropdown()
-    .find('input')
-    .type(`${candidate1.candidateFirstName}{enter}`, { force: true })
-  cy.wait('@getCandidate')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  ratesPage
-    .getCandidateLabel()
-    .contains(candidate1.candidateFirstName)
-    .click({ force: true })
-  cy.get('body').type('{esc}')
-  cy.get('body').type('{esc}')
-  ratesPage
-    .getPayRateField()
-    .clear()
-    .type(rates.hospitalPayRate, { force: true })
-  ratesPage
-    .getChargeField()
-    .clear()
-    .type(rates.hospitalPayCharge, { force: true })
-  ratesPage.getCreateButton().click({ force: true })
-  cy.wait('@postRate')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.CREATED)
-  cy.wait(1000)
-  paginationSelectors.getLastPage().click({ force: true })
-  cy.wait(1500)
-  ratesPage
-    .getDisplayedCharge()
-    .last()
-    .then((text) => {
-      const current = text.text().trim()
-      expect(current).to.equal(`£ ${rates.hospitalPayCharge}`)
+Cypress.Commands.add(
+  'createSpecificCandidateHospitalRate',
+  (client, candidate) => {
+    cy.wait(1500)
+    ratesPage.getNewRateButton().click({ force: true })
+    cy.wait('@getSidebarClients')
+      .its('response.statusCode')
+      .should('eq', HttpStatusCode.OK)
+    cy.wait(500)
+    ratesPage.getClientField().click({ force: true })
+    dropdownSelectors.getDropdownLabel().each((el, i) => {
+      const trust = el.text().trim()
+      if (trust === client.trustName) {
+        dropdownSelectors.getDropdownArrowLevel0().eq(i).click({ force: true })
+      }
     })
-})
+    dropdownSelectors
+      .getDropdownLabel()
+      .contains(client.hospitalName)
+      .click({ force: true })
+    ratesPage.getShiftTimeDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0(`${client.hospitalName} Day`)
+    ratesPage.getDayDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0(getDay())
+    ratesPage.getRoleDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0(role)
+    ratesPage.getBandDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0(band)
+    ratesPage.getEmploymentTypeDropdown().click({ force: true })
+    cy.selectItemFromDropdownLevel0('Umbrella')
+    ratesPage.getCandidateDropdown().click({ force: true })
+    ratesPage
+      .getCandidateDropdown()
+      .find('input')
+      .type(`${candidate.candidateFirstName}{enter}`, { force: true })
+    cy.wait('@getCandidate')
+      .its('response.statusCode')
+      .should('eq', HttpStatusCode.OK)
+    ratesPage
+      .getCandidateLabel()
+      .contains(candidate.candidateFirstName)
+      .click({ force: true })
+    cy.get('body').type('{esc}')
+    cy.get('body').type('{esc}')
+    ratesPage
+      .getPayRateField()
+      .clear()
+      .type(rates.hospitalPayRate, { force: true })
+    ratesPage
+      .getChargeField()
+      .clear()
+      .type(rates.hospitalPayCharge, { force: true })
+    ratesPage.getCreateButton().click({ force: true })
+    cy.wait('@postRate')
+      .its('response.statusCode')
+      .should('eq', HttpStatusCode.CREATED)
+    cy.wait(1000)
+    paginationSelectors.getLastPage().click({ force: true })
+    cy.wait(1500)
+    ratesPage
+      .getDisplayedCharge()
+      .last()
+      .then((text) => {
+        const current = text.text().trim()
+        expect(current).to.equal(`£ ${rates.hospitalPayCharge}`)
+      })
+  }
+)
 
-Cypress.Commands.add('createSpecificCandidateWardRate', () => {
+Cypress.Commands.add('createSpecificCandidateWardRate', (client, candidate) => {
   cy.wait(1500)
   ratesPage.getNewRateButton().click({ force: true })
   cy.wait('@getSidebarClients')
@@ -230,13 +235,13 @@ Cypress.Commands.add('createSpecificCandidateWardRate', () => {
     .should('eq', HttpStatusCode.OK)
   cy.wait(500)
   ratesPage.getClientField().click({ force: true })
-  ratesPage.getDropdownLabel().each((el, i) => {
+  dropdownSelectors.getDropdownLabel().each((el, i) => {
     const trust = el.text().trim()
-    if (trust === client1.trustName) {
+    if (trust === client.trustName) {
       dropdownSelectors.getDropdownArrowLevel0().eq(i).click({ force: true })
-      ratesPage.getDropdownLabel().each((el, j) => {
+      dropdownSelectors.getDropdownLabel().each((el, j) => {
         const hospital = el.text().trim()
-        if (hospital === client1.hospitalName) {
+        if (hospital === client.hospitalName) {
           dropdownSelectors
             .getDropdownArrowLevel0()
             .eq(j)
@@ -245,12 +250,12 @@ Cypress.Commands.add('createSpecificCandidateWardRate', () => {
       })
     }
   })
-  ratesPage
+  dropdownSelectors
     .getDropdownLabel()
-    .contains(`${client1.wardName}`)
+    .contains(`${client.wardName}`)
     .click({ force: true })
   ratesPage.getShiftTimeDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(`${client1.wardName} Day`)
+  cy.selectItemFromDropdownLevel0(`${client.wardName} Day`)
   ratesPage.getDayDropdown().click({ force: true })
   cy.selectItemFromDropdownLevel0(getDay())
   ratesPage.getRoleDropdown().click({ force: true })
@@ -263,13 +268,13 @@ Cypress.Commands.add('createSpecificCandidateWardRate', () => {
   ratesPage
     .getCandidateDropdown()
     .find('input')
-    .type(`${candidate1.candidateFirstName}{enter}`, { force: true })
+    .type(`${candidate.candidateFirstName}{enter}`, { force: true })
   cy.wait('@getCandidate')
     .its('response.statusCode')
     .should('eq', HttpStatusCode.OK)
   ratesPage
     .getCandidateLabel()
-    .contains(candidate1.candidateFirstName)
+    .contains(candidate.candidateFirstName)
     .click({ force: true })
   cy.get('body').type('{esc}')
   cy.get('body').type('{esc}')

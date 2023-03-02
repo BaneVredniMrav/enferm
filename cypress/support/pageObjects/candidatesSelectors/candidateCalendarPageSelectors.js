@@ -1,6 +1,13 @@
 class CandidateCalendarPage {
   getDateFromCalendar() {
-    return cy.get('.calendar__date', { timeout: 10000 })
+    return cy.get('.cell-box--is-active .calendar__date', { timeout: 10000 })
+  }
+
+  getPreviousMonthButton() {
+    return cy.get('.date > :nth-child(2)', { timeout: 10000 })
+  }
+  getNextMonthButton() {
+    return cy.get('.date > :nth-child(3)', { timeout: 10000 })
   }
 
   getYesAvailableButton() {

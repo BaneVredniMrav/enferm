@@ -1,8 +1,8 @@
-import { client1 } from '../../../../fixtures/fakes'
+import { rateSplits } from '../../../../fixtures/fakes'
 import {
-  trustID,
-  hospitalID,
-  wardID
+  trustIDs,
+  hospitalIDs,
+  wardIDs
 } from '../APIclientsCommands/APIclientsCommands'
 
 const baseAPI = Cypress.env('BASE_API')
@@ -12,25 +12,25 @@ let wardRateSplitsIDs = []
 
 //TODO After refreshing DEV database the Trust inherit IDs should be changed into 1 and 2
 //TODO Adapt request to both env STAGE, DEV because inherit_id is different
-Cypress.Commands.add('APIcreateTrustRateSplit', (token) => {
+Cypress.Commands.add('APIcreateTrustRateSplit', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
     url: `${baseAPI}/day-times`,
     body: {
-      client_id: trustID,
+      client_id: trustIDs[client.index],
       segments: [
         {
-          name: `${client1.trustName} Day`,
-          from: '06:00:00',
-          to: '20:00:00',
-          inherit_id: 1
+          name: `${client.trustName} Day`,
+          from: `${rateSplits.day}:00`,
+          to: `${rateSplits.night}:00`,
+          inherit_id: 117
         },
         {
-          name: `${client1.trustName} Night`,
-          from: '20:00:00',
-          to: '06:00:00',
-          inherit_id: 2
+          name: `${client.trustName} Night`,
+          from: `${rateSplits.night}:00`,
+          to: `${rateSplits.day}:00`,
+          inherit_id: 118
         }
       ]
     },
@@ -44,24 +44,24 @@ Cypress.Commands.add('APIcreateTrustRateSplit', (token) => {
   })
 })
 
-Cypress.Commands.add('APIcreateHospitalRateSplit', (token) => {
+Cypress.Commands.add('APIcreateHospitalRateSplit', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
     url: `${baseAPI}/day-times`,
     body: {
-      client_id: hospitalID,
+      client_id: hospitalIDs[client.index],
       segments: [
         {
-          name: `${client1.hospitalName} Day`,
-          from: '06:00:00',
-          to: '20:00:00',
+          name: `${client.hospitalName} Day`,
+          from: `${rateSplits.day}:00`,
+          to: `${rateSplits.night}:00`,
           inherit_id: trustRateSplitsIDs[0]
         },
         {
-          name: `${client1.hospitalName} Night`,
-          from: '20:00:00',
-          to: '06:00:00',
+          name: `${client.hospitalName} Night`,
+          from: `${rateSplits.night}:00`,
+          to: `${rateSplits.day}:00`,
           inherit_id: trustRateSplitsIDs[1]
         }
       ]
@@ -78,24 +78,24 @@ Cypress.Commands.add('APIcreateHospitalRateSplit', (token) => {
   })
 })
 
-Cypress.Commands.add('APIcreateWardRateSplit', (token) => {
+Cypress.Commands.add('APIcreateWardRateSplit', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
     url: `${baseAPI}/day-times`,
     body: {
-      client_id: wardID,
+      client_id: wardIDs[client.index],
       segments: [
         {
-          name: `${client1.wardName} Day`,
-          from: '06:00:00',
-          to: '20:00:00',
+          name: `${client.wardName} Day`,
+          from: `${rateSplits.day}:00`,
+          to: `${rateSplits.night}:00`,
           inherit_id: hospitalRateSplitsIDs[0]
         },
         {
-          name: `${client1.wardName} Night`,
-          from: '20:00:00',
-          to: '06:00:00',
+          name: `${client.wardName} Night`,
+          from: `${rateSplits.night}:00`,
+          to: `${rateSplits.day}:00`,
           inherit_id: hospitalRateSplitsIDs[1]
         }
       ]

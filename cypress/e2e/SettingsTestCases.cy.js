@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+import { client1, manager } from '../fixtures/fakes'
+
 let token
 
 describe('Test Cases for the Regions page', () => {
@@ -29,17 +31,17 @@ describe('Test Cases for the Rate Splits page', () => {
       cy.APICreateRegion(firstToken)
       cy.APICreateRole(firstToken)
       cy.APICreateBand(firstToken)
-      cy.APICreateUser(firstToken)
-      cy.APICreateTrust(firstToken)
-      cy.APICreateHospital(firstToken)
-      cy.APICreateWard(firstToken)
+      cy.APICreateUser(firstToken, manager)
+      cy.APICreateTrust(firstToken, client1)
+      cy.APICreateHospital(firstToken, client1)
+      cy.APICreateWard(firstToken, client1)
       cy.APILogout(firstToken)
     })
   })
   after(() => {
     cy.APIAdminLogin().then((response) => {
       let lastToken = response.body.token
-      cy.APIDeleteTrust(lastToken)
+      cy.APIDeleteTrust(lastToken, client1)
       cy.APIDeleteUser(lastToken)
       cy.APIDeleteRole(lastToken)
       cy.APIDeleteBand(lastToken)
@@ -56,9 +58,9 @@ describe('Test Cases for the Rate Splits page', () => {
 
   it('TC1 - The user is able to create rate splits', () => {
     cy.visitSettingsRateSplitsPage()
-    cy.createTrustRateSplit()
-    cy.createHospitalRateSplit()
-    cy.createWardRateSplit()
+    cy.createTrustRateSplit(client1)
+    cy.createHospitalRateSplit(client1)
+    cy.createWardRateSplit(client1)
   })
 
   it('TC2 - The user is able to cut rate split', () => {

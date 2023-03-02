@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+import { manager } from '../fixtures/fakes'
+
 let token
 
 before(() => {
@@ -26,13 +28,13 @@ describe('Test Cases for the Users page', () => {
 
   it('TC1 - The user is able to create and delete manager', () => {
     cy.visitUsersPage()
-    cy.createUser()
-    cy.deleteUser()
+    cy.createUser(manager)
+    cy.deleteUser(manager)
   })
 
   it('TC2 - The user is able to verify manager via email', () => {
     let newToken
-    cy.APICreateUser(token)
+    cy.APICreateUser(token, manager)
     cy.APILogout(token)
     cy.clearAllLocalStorage()
     cy.clearAllCookies()
@@ -40,7 +42,7 @@ describe('Test Cases for the Users page', () => {
     cy.APIGoOnTheSetUpPasswordPage()
     cy.setNewPassword()
     cy.verifyPasswordSetting()
-    cy.managerLoginOnPortal()
+    cy.managerLoginOnPortal(manager)
     cy.verifyLogin()
     cy.logoutFromPortal()
     cy.APIAdminLogin().then((response) => {

@@ -33,6 +33,12 @@ class Dropdown {
       { timeout: 10000 }
     )
   }
+
+  getDropdownLabel() {
+    return cy.get('.vue-treeselect__label-container > label', {
+      timeout: 10000
+    })
+  }
 }
 
 export default Dropdown

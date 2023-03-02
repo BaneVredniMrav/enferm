@@ -1,5 +1,4 @@
 import SettingsPage from '../../pageObjects/settingsSelectors/settingsPageSelectors'
-import { client1 } from '../../../fixtures/fakes'
 import HttpStatusCode from '../../general/HttpStatusCode'
 import Dropdown from '../../pageObjects/componentSelectors/dropdownSelectors'
 
@@ -30,22 +29,22 @@ Cypress.Commands.add('visitSettingsRateSplitsPage', () => {
     .should('eq', HttpStatusCode.OK)
 })
 
-Cypress.Commands.add('createTrustRateSplit', () => {
+Cypress.Commands.add('createTrustRateSplit', (client) => {
   settingsPage.getClientsField().click({ force: true })
-  settingsPage
+  dropdownSelectors
     .getDropdownLabel()
-    .contains(client1.trustName)
+    .contains(client.trustName)
     .click({ force: true })
   settingsPage
     .getDayTimeNameField()
     .eq(0)
     .clear()
-    .type(`${client1.trustName} Day{enter}`, { delay: 0 }, { force: true })
+    .type(`${client.trustName} Day{enter}`, { delay: 0 }, { force: true })
   settingsPage
     .getDayTimeNameField()
     .eq(1)
     .clear()
-    .type(`${client1.trustName} Night{enter}`, { delay: 0 }, { force: true })
+    .type(`${client.trustName} Night{enter}`, { delay: 0 }, { force: true })
   settingsPage.getSaveButton().click({ force: true })
   cy.wait('@getClients')
     .its('response.statusCode')
@@ -56,36 +55,36 @@ Cypress.Commands.add('createTrustRateSplit', () => {
   settingsPage
     .getDayTimeNameField()
     .eq(0)
-    .should('have.value', `${client1.trustName} Day`)
+    .should('have.value', `${client.trustName} Day`)
   settingsPage
     .getDayTimeNameField()
     .eq(1)
-    .should('have.value', `${client1.trustName} Night`)
+    .should('have.value', `${client.trustName} Night`)
 })
 
-Cypress.Commands.add('createHospitalRateSplit', () => {
-  settingsPage.getClearClientsField().click({ force: true })
+Cypress.Commands.add('createHospitalRateSplit', (client) => {
+  // settingsPage.getClearClientsField().click({ force: true })
   settingsPage.getClientsField().click({ force: true })
-  settingsPage.getDropdownLabel().each((el, i) => {
-    const client = el.text().trim()
-    if (client === client1.trustName) {
+  dropdownSelectors.getDropdownLabel().each((el, i) => {
+    const text = el.text().trim()
+    if (text === client.trustName) {
       dropdownSelectors.getDropdownArrowLevel0().eq(i).click({ force: true })
     }
   })
-  settingsPage
+  dropdownSelectors
     .getDropdownLabel()
-    .contains(client1.hospitalName)
+    .contains(client.hospitalName)
     .click({ force: true })
   settingsPage
     .getDayTimeNameField()
     .eq(0)
     .clear()
-    .type(`${client1.hospitalName} Day{enter}`, { delay: 0 }, { force: true })
+    .type(`${client.hospitalName} Day{enter}`, { delay: 0 }, { force: true })
   settingsPage
     .getDayTimeNameField()
     .eq(1)
     .clear()
-    .type(`${client1.hospitalName} Night{enter}`, { delay: 0 }, { force: true })
+    .type(`${client.hospitalName} Night{enter}`, { delay: 0 }, { force: true })
   settingsPage.getSaveButton().click({ force: true })
   cy.wait('@getClients')
     .its('response.statusCode')
@@ -96,32 +95,32 @@ Cypress.Commands.add('createHospitalRateSplit', () => {
   settingsPage
     .getDayTimeNameField()
     .eq(0)
-    .should('have.value', `${client1.hospitalName} Day`)
+    .should('have.value', `${client.hospitalName} Day`)
   settingsPage
     .getDayTimeNameField()
     .eq(1)
-    .should('have.value', `${client1.hospitalName} Night`)
+    .should('have.value', `${client.hospitalName} Night`)
 })
 
-Cypress.Commands.add('createWardRateSplit', () => {
+Cypress.Commands.add('createWardRateSplit', (client) => {
   settingsPage.getClearClientsField().click({ force: true })
   cy.wait(1000)
   settingsPage.getClientsField().click({ force: true })
   dropdownSelectors.getDropdownArrowLevel1().click({ force: true })
-  settingsPage
+  dropdownSelectors
     .getDropdownLabel()
-    .contains(client1.wardName)
+    .contains(client.wardName)
     .click({ force: true })
   settingsPage
     .getDayTimeNameField()
     .eq(0)
     .clear()
-    .type(`${client1.wardName} Day{enter}`, { delay: 0 }, { force: true })
+    .type(`${client.wardName} Day{enter}`, { delay: 0 }, { force: true })
   settingsPage
     .getDayTimeNameField()
     .eq(1)
     .clear()
-    .type(`${client1.wardName} Night{enter}`, { delay: 0 }, { force: true })
+    .type(`${client.wardName} Night{enter}`, { delay: 0 }, { force: true })
   settingsPage.getSaveButton().click({ force: true })
   cy.wait('@getClients')
     .its('response.statusCode')
@@ -132,11 +131,11 @@ Cypress.Commands.add('createWardRateSplit', () => {
   settingsPage
     .getDayTimeNameField()
     .eq(0)
-    .should('have.value', `${client1.wardName} Day`)
+    .should('have.value', `${client.wardName} Day`)
   settingsPage
     .getDayTimeNameField()
     .eq(1)
-    .should('have.value', `${client1.wardName} Night`)
+    .should('have.value', `${client.wardName} Night`)
 })
 
 Cypress.Commands.add('cutAndResetRateSplit', () => {

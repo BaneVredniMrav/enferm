@@ -1,26 +1,25 @@
-import { client1, invoiceDueDate } from '../../../../fixtures/fakes'
 import { managerID } from '../APIusersCommands/APIusersCommands'
 import { regionID } from '../APIsettingsCommands/APIregionsCommands'
 import { SignOffMethods } from '../../../general/shift'
 
 const baseAPI = Cypress.env('BASE_API')
-let trustID
-let hospitalID
-let wardID
+let trustIDs = []
+let hospitalIDs = []
+let wardIDs = []
 
-Cypress.Commands.add('APICreateTrust', (token) => {
+Cypress.Commands.add('APICreateTrust', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
     url: `${baseAPI}/clients`,
     body: {
-      name: client1.trustName,
-      address_1: client1.address,
+      name: client.trustName,
+      address_1: client.address,
       city: 'Beograd',
-      postcode: client1.postCode,
-      billing_city: `Billing ${client1.city}`,
-      billing_address_1: `Billing ${client1.address}`,
-      billing_postcode: `Billing ${client1.postCode}`,
+      postcode: client.postCode,
+      billing_city: `Billing ${client.city}`,
+      billing_address_1: `Billing ${client.address}`,
+      billing_postcode: `Billing ${client.postCode}`,
       longitude: 20.46123,
       latitude: 44.8125449,
       agencies: [
@@ -33,40 +32,40 @@ Cypress.Commands.add('APICreateTrust', (token) => {
           id: managerID
         }
       ],
-      invoice_due_days: invoiceDueDate,
+      invoice_due_days: client.invoiceDueDate,
       sign_off_methods: [
         SignOffMethods.Pin,
         SignOffMethods.Signature,
         SignOffMethods.Push
       ],
-      billing_name: `Billing ${client1.trustName}`,
-      billing_email: `Trust${client1.billingEmail}`
+      billing_name: `Billing ${client.trustName}`,
+      billing_email: `Trust${client.billingEmail}`
     },
     headers: {
       authorization
     }
   }
   cy.request(options).then((response) => {
-    trustID = response.body.data.id
+    trustIDs.push(response.body.data.id)
   })
 })
 
-Cypress.Commands.add('APICreateHospital', (token) => {
+Cypress.Commands.add('APICreateHospital', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
     url: `${baseAPI}/clients`,
     body: {
-      name: client1.hospitalName,
-      address_1: client1.address,
+      name: client.hospitalName,
+      address_1: client.address,
       city: 'Beograd',
-      postcode: client1.postCode,
-      billing_city: `Billing ${client1.city}`,
-      billing_address_1: `Billing ${client1.address}`,
-      billing_postcode: `Billing ${client1.postCode}`,
+      postcode: client.postCode,
+      billing_city: `Billing ${client.city}`,
+      billing_address_1: `Billing ${client.address}`,
+      billing_postcode: `Billing ${client.postCode}`,
       longitude: 20.46123,
       latitude: 44.8125449,
-      parent_id: trustID,
+      parent_id: trustIDs[client.index],
       agencies: [
         {
           id: regionID
@@ -77,40 +76,40 @@ Cypress.Commands.add('APICreateHospital', (token) => {
           id: managerID
         }
       ],
-      invoice_due_days: invoiceDueDate,
+      invoice_due_days: client.invoiceDueDate,
       sign_off_methods: [
         SignOffMethods.Pin,
         SignOffMethods.Signature,
         SignOffMethods.Push
       ],
-      billing_name: `Billing ${client1.hospitalName}`,
-      billing_email: `Hospital${client1.billingEmail}`
+      billing_name: `Billing ${client.hospitalName}`,
+      billing_email: `Hospital${client.billingEmail}`
     },
     headers: {
       authorization
     }
   }
   cy.request(options).then((response) => {
-    hospitalID = response.body.data.id
+    hospitalIDs.push(response.body.data.id)
   })
 })
 
-Cypress.Commands.add('APICreateWard', (token) => {
+Cypress.Commands.add('APICreateWard', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
     url: `${baseAPI}/clients`,
     body: {
-      name: client1.wardName,
-      address_1: client1.address,
+      name: client.wardName,
+      address_1: client.address,
       city: 'Beograd',
-      postcode: client1.postCode,
-      billing_city: `Billing ${client1.city}`,
-      billing_address_1: `Billing ${client1.address}`,
-      billing_postcode: `Billing ${client1.postCode}`,
+      postcode: client.postCode,
+      billing_city: `Billing ${client.city}`,
+      billing_address_1: `Billing ${client.address}`,
+      billing_postcode: `Billing ${client.postCode}`,
       longitude: 20.46123,
       latitude: 44.8125449,
-      parent_id: hospitalID,
+      parent_id: hospitalIDs[client.index],
       agencies: [
         {
           id: regionID
@@ -121,29 +120,29 @@ Cypress.Commands.add('APICreateWard', (token) => {
           id: managerID
         }
       ],
-      invoice_due_days: invoiceDueDate,
+      invoice_due_days: client.invoiceDueDate,
       sign_off_methods: [
         SignOffMethods.Pin,
         SignOffMethods.Signature,
         SignOffMethods.Push
       ],
-      billing_name: `Billing ${client1.wardName}`,
-      billing_email: `Ward${client1.billingEmail}`
+      billing_name: `Billing ${client.wardName}`,
+      billing_email: `Ward${client.billingEmail}`
     },
     headers: {
       authorization
     }
   }
   cy.request(options).then((response) => {
-    wardID = response.body.data.id
+    wardIDs.push(response.body.data.id)
   })
 })
 
-Cypress.Commands.add('APIDeleteTrust', (token) => {
+Cypress.Commands.add('APIDeleteTrust', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/clients/${trustID}`,
+    url: `${baseAPI}/clients/${trustIDs[client.index]}`,
     headers: {
       authorization
     }
@@ -151,11 +150,11 @@ Cypress.Commands.add('APIDeleteTrust', (token) => {
   cy.request(options)
 })
 
-Cypress.Commands.add('APIDeleteHospital', (token) => {
+Cypress.Commands.add('APIDeleteHospital', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/clients/${hospitalID}`,
+    url: `${baseAPI}/clients/${hospitalIDs[client.index]}`,
     headers: {
       authorization
     }
@@ -163,11 +162,11 @@ Cypress.Commands.add('APIDeleteHospital', (token) => {
   cy.request(options)
 })
 
-Cypress.Commands.add('APIDeleteWard', (token) => {
+Cypress.Commands.add('APIDeleteWard', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/clients/${wardID}`,
+    url: `${baseAPI}/clients/${wardIDs[client.index]}`,
     headers: {
       authorization
     }
@@ -175,4 +174,4 @@ Cypress.Commands.add('APIDeleteWard', (token) => {
   cy.request(options)
 })
 
-export { trustID, hospitalID, wardID }
+export { trustIDs, hospitalIDs, wardIDs }

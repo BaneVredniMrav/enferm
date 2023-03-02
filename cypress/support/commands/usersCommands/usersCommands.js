@@ -1,5 +1,5 @@
 import UsersPage from '../../pageObjects/usersSelectors/usersPageSelectors'
-import { manager, region } from '../../../fixtures/fakes'
+import { region } from '../../../fixtures/fakes'
 import HttpStatusCode from '../../general/HttpStatusCode'
 import Sidebar from '../../pageObjects/componentSelectors/sidebarSelectors'
 import Dropdown from '../../pageObjects/componentSelectors/dropdownSelectors'
@@ -36,12 +36,12 @@ Cypress.Commands.add('visitUsersPage', () => {
     .should('eq', HttpStatusCode.OK)
 })
 
-Cypress.Commands.add('createUser', () => {
+Cypress.Commands.add('createUser', (user) => {
   usersPage.getNewCandidateButton().click()
-  usersPage.getFirstNameField().type(manager.managerFirstName, { force: true })
-  usersPage.getLastNameField().type(manager.managerLastName, { force: true })
-  usersPage.getEmailField().type(manager.email, { force: true })
-  usersPage.getMobilePhoneField().type(manager.phoneNumber, { force: true })
+  usersPage.getFirstNameField().type(user.managerFirstName, { force: true })
+  usersPage.getLastNameField().type(user.managerLastName, { force: true })
+  usersPage.getEmailField().type(user.email, { force: true })
+  usersPage.getMobilePhoneField().type(user.phoneNumber, { force: true })
   usersPage.getUserPermissionDropdown().click({ force: true })
   cy.selectItemFromDropdownLevel0('Manager')
   usersPage.getRegionDropdown().click({ force: true })
@@ -58,18 +58,18 @@ Cypress.Commands.add('createUser', () => {
     .should('be.visible')
     .then((text) => {
       const current = text.text().trim()
-      expect(current).to.equal(manager.email)
+      expect(current).to.equal(user.email)
     })
   usersPage
     .getDisplayedUserMPhone()
     .should('be.visible')
     .then((text) => {
       const current = text.text().trim()
-      expect(current).to.equal(manager.phoneNumber)
+      expect(current).to.equal(user.phoneNumber)
     })
 })
 
-Cypress.Commands.add('deleteUser', () => {
+Cypress.Commands.add('deleteUser', (user) => {
   usersPage.getDisplayedUserEmail().click({ force: true })
   cy.wait(2000)
   sidebarSelectors.getActionsButton().should('be.visible').click()
@@ -83,13 +83,13 @@ Cypress.Commands.add('deleteUser', () => {
     .should('be.visible')
     .then((text) => {
       const current = text.text().trim()
-      expect(current).to.not.equal(manager.email)
+      expect(current).to.not.equal(user.email)
     })
   usersPage
     .getDisplayedUserMPhone()
     .should('be.visible')
     .then((text) => {
       const current = text.text().trim()
-      expect(current).to.not.equal(manager.phoneNumber)
+      expect(current).to.not.equal(user.phoneNumber)
     })
 })

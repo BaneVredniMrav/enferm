@@ -64,7 +64,7 @@ class NewShiftPage {
   // Third step of creating new shift
 
   getAvailableCandidate() {
-    return cy.get('.column > .name', { timeout: 10000 })
+    return cy.get('.candidate-item--wrapper > .column', { timeout: 10000 })
   }
 
   getSubmitShiftButton() {

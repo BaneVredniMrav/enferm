@@ -1,5 +1,5 @@
 import LoginPage from '../../pageObjects/loginSelectors/loginPageSelectors'
-import { manager, newPassword } from '../../../fixtures/fakes'
+import { newPassword } from '../../../fixtures/fakes'
 
 const username = Cypress.env('USERNAME')
 const password = Cypress.env('PASSWORD')
@@ -13,9 +13,9 @@ Cypress.Commands.add('adminLoginOnPortal', () => {
   loginPage.getLoginButton().click({ force: true })
 })
 
-Cypress.Commands.add('managerLoginOnPortal', () => {
+Cypress.Commands.add('managerLoginOnPortal', (user) => {
   cy.visit('/')
-  loginPage.getUsernameField().should('be.visible').type(manager.email)
+  loginPage.getUsernameField().should('be.visible').type(user.email)
   loginPage.getPasswordField().should('be.visible').type(newPassword)
   cy.wait(1000)
   loginPage.getLoginButton().click({ force: true })
@@ -35,6 +35,7 @@ Cypress.Commands.add('verifyLogin', () => {
 Cypress.Commands.add('setNewPassword', () => {
   loginPage.getUsernameField().should('be.visible').type(newPassword)
   loginPage.getPasswordField().should('be.visible').type(newPassword)
+  cy.wait(500)
   loginPage.getLoginButton().should('be.visible').click() //here we use getLoginButton() because the selector is same
 })
 

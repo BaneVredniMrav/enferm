@@ -1,5 +1,7 @@
 /// <reference types="Cypress" />
 
+import { client1, candidate1, manager } from '../fixtures/fakes'
+
 let token
 
 before(() => {
@@ -8,19 +10,19 @@ before(() => {
     cy.APICreateRegion(firstToken)
     cy.APICreateRole(firstToken)
     cy.APICreateBand(firstToken)
-    cy.APICreateUser(firstToken)
-    cy.APICreateTrust(firstToken)
-    cy.APICreateHospital(firstToken)
-    cy.APICreateWard(firstToken)
-    cy.APICreateCandidate(firstToken)
+    cy.APICreateUser(firstToken, manager)
+    cy.APICreateTrust(firstToken, client1)
+    cy.APICreateHospital(firstToken, client1)
+    cy.APICreateWard(firstToken, client1)
+    cy.APICreateCandidate(firstToken, candidate1, client1)
     cy.APILogout(firstToken)
   })
 })
 after(() => {
   cy.APIAdminLogin().then((response) => {
     let lastToken = response.body.token
-    cy.APIDeleteCandidate(lastToken)
-    cy.APIDeleteTrust(lastToken)
+    cy.APIDeleteCandidate(lastToken, candidate1)
+    cy.APIDeleteTrust(lastToken, client1)
     cy.APIDeleteUser(lastToken)
     cy.APIDeleteRole(lastToken)
     cy.APIDeleteBand(lastToken)
@@ -39,28 +41,28 @@ describe('Test Cases for the Rates page', () => {
 
   it('TC1 - The user is able to create rate assigned to the Trust', () => {
     cy.visitRatesPage()
-    cy.createTrustRate()
+    cy.createTrustRate(client1)
     cy.deleteRate()
   })
 
   it('TC2 - The user is able to create specific candidate rate assigned to the Trust', () => {
     cy.visitRatesPage()
-    cy.APIcreateTrustRateSplit(token)
-    cy.createSpecificCandidateTrustRate()
+    cy.APIcreateTrustRateSplit(token, client1)
+    cy.createSpecificCandidateTrustRate(client1, candidate1)
     cy.deleteRate()
   })
 
   it('TC3 - The user is able to create specific candidate rate assigned to the Hospital', () => {
     cy.visitRatesPage()
-    cy.APIcreateHospitalRateSplit(token)
-    cy.createSpecificCandidateHospitalRate()
+    cy.APIcreateHospitalRateSplit(token, client1)
+    cy.createSpecificCandidateHospitalRate(client1, candidate1)
     cy.deleteRate()
   })
 
   it('TC4 - The user is able to create specific candidate rate assigned to the Ward', () => {
     cy.visitRatesPage()
-    cy.APIcreateWardRateSplit(token)
-    cy.createSpecificCandidateWardRate()
+    cy.APIcreateWardRateSplit(token, client1)
+    cy.createSpecificCandidateWardRate(client1, candidate1)
     cy.deleteRate()
   })
 })

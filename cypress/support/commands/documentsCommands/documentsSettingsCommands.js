@@ -1,5 +1,4 @@
 import DocumentsSettingsPage from '../../pageObjects/documentsSelectors/documentsSettingsPage'
-import { documentName } from '../../../fixtures/fakes'
 import HttpStatusCode from '../../general/HttpStatusCode'
 import Sidebar from '../../pageObjects/componentSelectors/sidebarSelectors'
 
@@ -26,11 +25,9 @@ Cypress.Commands.add('visitDocumentSettingsPage', () => {
     .should('eq', HttpStatusCode.OK)
 })
 
-Cypress.Commands.add('createDocument', () => {
+Cypress.Commands.add('createDocument', (document) => {
   documentSettingsPage.getNewDocumentButton().click({ force: true })
-  documentSettingsPage
-    .getDocumentNameField()
-    .type(documentName, { force: true })
+  documentSettingsPage.getDocumentNameField().type(document, { force: true })
   documentSettingsPage.getRequiredRadio().click({ force: true })
   documentSettingsPage.getHasExpiryRadio().click({ force: true })
   documentSettingsPage.getSaveButton().click({ force: true })
@@ -40,11 +37,11 @@ Cypress.Commands.add('createDocument', () => {
   cy.wait(1500)
   documentSettingsPage.getDisplayedDocumentName().then((text) => {
     const current = text.text().trim()
-    expect(current).to.equal(documentName)
+    expect(current).to.equal(document)
   })
 })
 
-Cypress.Commands.add('deleteDocument', () => {
+Cypress.Commands.add('deleteDocument', (document) => {
   documentSettingsPage.getDisplayedDocumentName().click({ force: true })
   cy.wait(1500)
   sidebarSelectors.getActionsButton().should('be.visible').click()
@@ -56,6 +53,6 @@ Cypress.Commands.add('deleteDocument', () => {
   cy.wait(1500)
   documentSettingsPage.getDisplayedDocumentName().then((text) => {
     const current = text.text().trim()
-    expect(current).to.not.equal(documentName)
+    expect(current).to.not.equal(document)
   })
 })

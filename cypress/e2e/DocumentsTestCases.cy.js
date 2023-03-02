@@ -1,5 +1,13 @@
 /// <reference types="Cypress" />
 
+import {
+  client1,
+  candidate1,
+  document1,
+  document2,
+  manager
+} from '../fixtures/fakes'
+
 let token
 
 before(() => {
@@ -8,19 +16,19 @@ before(() => {
     cy.APICreateRegion(firstToken)
     cy.APICreateRole(firstToken)
     cy.APICreateBand(firstToken)
-    cy.APICreateUser(firstToken)
-    cy.APICreateTrust(firstToken)
-    cy.APICreateHospital(firstToken)
-    cy.APICreateWard(firstToken)
-    cy.APICreateCandidate(firstToken)
+    cy.APICreateUser(firstToken, manager)
+    cy.APICreateTrust(firstToken, client1)
+    cy.APICreateHospital(firstToken, client1)
+    cy.APICreateWard(firstToken, client1)
+    cy.APICreateCandidate(firstToken, candidate1, client1)
     cy.APILogout(firstToken)
   })
 })
 after(() => {
   cy.APIAdminLogin().then((response) => {
     let lastToken = response.body.token
-    cy.APIDeleteCandidate(lastToken)
-    cy.APIDeleteTrust(lastToken)
+    cy.APIDeleteCandidate(lastToken, candidate1)
+    cy.APIDeleteTrust(lastToken, client1)
     cy.APIDeleteUser(lastToken)
     cy.APIDeleteBand(lastToken)
     cy.APIDeleteRole(lastToken)
@@ -38,7 +46,7 @@ describe('Test Cases for the Documents/By Candidate page', () => {
   })
 
   it('TC1 - The user is able to compliant candidate', () => {
-    cy.APICreateDocument(token)
+    cy.APICreateDocument(token, document1)
     cy.visitDocumentsByCandidatePage()
     cy.compliantCandidate()
     cy.APIDeleteDocument(token)
@@ -66,7 +74,7 @@ describe('Test Cases for the Documents/Settings page', () => {
 
   it('TC1 - The user is able to create and delete document', () => {
     cy.visitDocumentSettingsPage()
-    cy.createDocument()
-    cy.deleteDocument()
+    cy.createDocument(document2)
+    cy.deleteDocument(document2)
   })
 })

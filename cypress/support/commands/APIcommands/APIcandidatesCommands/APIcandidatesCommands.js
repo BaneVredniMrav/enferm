@@ -1,37 +1,38 @@
-import { candidate1, role } from '../../../../fixtures/fakes'
 import { managerID } from '../APIusersCommands/APIusersCommands'
 import {
-  trustID,
-  hospitalID,
-  wardID
+  trustIDs,
+  hospitalIDs,
+  wardIDs
 } from '../APIclientsCommands/APIclientsCommands'
 import { regionID } from '../APIsettingsCommands/APIregionsCommands'
 import { bandID } from '../APIsettingsCommands/APIbandsCommands'
 import { roleID } from '../APIsettingsCommands/APIrolesCommands'
 import { ShiftStatuses, PaymentTypes } from '../../../general/shift'
+import { role } from '../APIsettingsCommands/APIrolesCommands'
 
 const baseAPI = Cypress.env('BASE_API')
-let candidateID
+let candidateIDs = []
+let retroactivelyShiftID
 
 //Candidate Page
 
 //TODO https://tempestapp.atlassian.net/browse/EN-1883
-Cypress.Commands.add('APICreateCandidate', (token) => {
+Cypress.Commands.add('APICreateCandidate', (token, candidate, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
     url: `${baseAPI}/users/invite`,
     body: {
-      email: candidate1.email,
-      first_name: candidate1.candidateFirstName,
-      last_name: candidate1.candidateLastName,
-      mobile_phone: candidate1.phoneNumber,
+      email: candidate.email,
+      first_name: candidate.candidateFirstName,
+      last_name: candidate.candidateLastName,
+      mobile_phone: candidate.phoneNumber,
       date_of_brith: '', //TODO https://tempestapp.atlassian.net/browse/EN-1816
-      postcode: candidate1.postCode,
-      address: candidate1.address,
-      city: candidate1.city,
-      home_city: candidate1.city,
-      home_address: candidate1.address,
+      postcode: candidate.postCode,
+      address: candidate.address,
+      city: candidate.city,
+      home_city: candidate.city,
+      home_address: candidate.address,
       home_phone: '',
       latitude: 0,
       longitude: 0,
@@ -54,7 +55,7 @@ Cypress.Commands.add('APICreateCandidate', (token) => {
         id: 2,
         name: 'Umbrella'
       },
-      payroll_id: candidate1.payroll,
+      payroll_id: candidate.payroll,
       internal_id: '',
       agencies: [
         {
@@ -71,17 +72,17 @@ Cypress.Commands.add('APICreateCandidate', (token) => {
       ],
       clients: [
         {
-          id: trustID
+          id: trustIDs[client.index]
         },
         {
-          id: hospitalID
+          id: hospitalIDs[client.index]
         },
         {
-          id: wardID
+          id: wardIDs[client.index]
         }
       ],
       role: {},
-      nmc_pin: candidate1.nmcPIN,
+      nmc_pin: candidate.nmcPIN,
       employment_type_id: 2
     },
     headers: {
@@ -89,104 +90,126 @@ Cypress.Commands.add('APICreateCandidate', (token) => {
     }
   }
   cy.request(options).then((response) => {
-    candidateID = response.body.data.id
+    candidateIDs.push(response.body.data.id)
   })
 })
 
-Cypress.Commands.add('APIDeleteCandidate', (token) => {
+Cypress.Commands.add('APIDeleteCandidate', (token, candidate) => {
   let authorization = `bearer ${token}`
 
   cy.request({
     method: 'DELETE',
-    url: `${baseAPI}/users/${candidateID}`,
+    url: `${baseAPI}/users/${candidateIDs[candidate.index]}`,
     headers: {
       authorization
     }
   })
+  candidateIDs.splice(candidate.index, 1)
 })
 
 //Candidate Calendar Page
 
-Cypress.Commands.add('APISetCandidateAsAvailable', (token, segment) => {
-  let today = new Date()
-  today.setDate(today.getDate() + 1)
-  let tomorrow = today.toISOString().split('T')[0]
-  let authorization = `bearer ${token}`
-  let options = {
-    method: 'POST',
-    url: `${baseAPI}/availabilities`,
-    body: {
-      dates: [
-        {
-          date: tomorrow,
-          segments: [
-            {
-              id: segment
-            }
-          ]
-        }
-      ],
-      user_id: candidateID
-    },
-    headers: {
-      authorization
+Cypress.Commands.add(
+  'APISetCandidateAsAvailable',
+  (token, candidate, segment) => {
+    let date = new Date()
+    date.setDate(date.getDate() + 1)
+    let tomorrow = date.toISOString().split('T')[0]
+    let authorization = `bearer ${token}`
+    let options = {
+      method: 'POST',
+      url: `${baseAPI}/availabilities`,
+      body: {
+        dates: [
+          {
+            date: tomorrow,
+            segments: [
+              {
+                id: segment
+              }
+            ]
+          }
+        ],
+        user_id: candidateIDs[candidate.index]
+      },
+      headers: {
+        authorization
+      }
     }
+    cy.request(options)
   }
-  cy.request(options)
-})
+)
 
-Cypress.Commands.add('APISetCandidateAsUnavailable', (token, reason, note) => {
-  let today = new Date()
-  today.setDate(today.getDate() + 1)
-  let tomorrow = today.toISOString().split('T')[0]
-  let authorization = `bearer ${token}`
-  let options = {
-    method: 'POST',
-    url: `${baseAPI}/leave-requests/`,
-    body: {
-      reason: reason,
-      dates: [tomorrow],
-      note: note,
-      user_id: candidateID
-    },
-    headers: {
-      authorization
+Cypress.Commands.add(
+  'APISetCandidateAsUnavailable',
+  (token, candidate, reason, note) => {
+    let date = new Date()
+    date.setDate(date.getDate() + 1)
+    let tomorrow = date.toISOString().split('T')[0]
+    let authorization = `bearer ${token}`
+    let options = {
+      method: 'POST',
+      url: `${baseAPI}/leave-requests/`,
+      body: {
+        reason: reason,
+        dates: [tomorrow],
+        note: note,
+        user_id: candidateIDs[candidate.index]
+      },
+      headers: {
+        authorization
+      }
     }
+    cy.request(options)
   }
-  cy.request(options)
-})
+)
 
-Cypress.Commands.add('APICreateShiftRetroactievly', (token, shiftSegment) => {
-  let today = new Date()
-  today.setDate(today.getDate() - 1)
-  let yesterday = today.toISOString().split('T')[0]
-  let authorization = `bearer ${token}`
-  let options = {
-    method: 'POST',
-    url: `${baseAPI}/temps/${candidateID}/jobs`,
-    body: {
-      agency_id: regionID,
-      user_id: candidateID,
-      job_type_id: roleID,
-      grade_id: bandID,
-      payment_type: PaymentTypes.Hourly,
-      is_break_changeable: 1,
-      po_number: `${yesterday}/${shiftSegment.startTime}`,
-      attribute_values: [],
-      break_minutes: 60,
-      is_break_payable: false,
-      client_id: wardID,
-      bonuses: [],
-      start_time: `${yesterday} ${shiftSegment.startTime}:00`,
-      end_time: `${yesterday} ${shiftSegment.end.Time}:00`,
-      job_status: ShiftStatuses.AwaitingCandidate,
-      note: ''
-    },
-    headers: {
-      authorization
+Cypress.Commands.add(
+  'APICreateShiftRetroactively',
+  (token, candidate, client, shiftSegment) => {
+    let date = new Date()
+    date.setDate(date.getDate() - 1)
+    let yesterday = date.toISOString().split('T')[0]
+    let time =
+      date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+    let authorization = `bearer ${token}`
+    let options = {
+      method: 'POST',
+      url: `${baseAPI}/temps/${candidateIDs[candidate.index]}/jobs`,
+      body: {
+        agency_id: regionID,
+        user_id: candidateIDs[candidate.index],
+        job_type_id: roleID,
+        grade_id: bandID,
+        payment_type: PaymentTypes.Hourly,
+        is_break_changeable: 1,
+        po_number: `${yesterday}/${time}`,
+        attribute_values: [],
+        break_minutes: 60,
+        is_break_payable: false,
+        client_id: wardIDs[client.index],
+        bonuses: [],
+        start_time: `${yesterday} ${shiftSegment.startTime}:00`,
+        end_time: `${yesterday} ${shiftSegment.endTime}:00`,
+        job_status: ShiftStatuses.AwaitingCandidate,
+        note: ''
+      },
+      headers: {
+        authorization
+      }
     }
+    cy.request(options)
+    let options1 = {
+      method: 'GET',
+      url: `${baseAPI}/jobs?page=1&order_by=ID&sort_by=desc&include=client,jobRequest.jobType,user,signOff,signOff.user,invoice&date_interval=jobs.date_all_time`,
+      headers: {
+        authorization
+      }
+    }
+    cy.request(options1).then((response) => {
+      retroactivelyShiftID = response.body.data[0].id
+    })
   }
-  cy.request(options)
-})
+)
 
-export { candidateID }
+export { candidateIDs, retroactivelyShiftID }

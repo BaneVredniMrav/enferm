@@ -73,6 +73,7 @@ Cypress.Commands.add('checkSidebarIconsFunctionality', () => {
 //Command for cancel shift modal
 Cypress.Commands.add('cancelShift', () => {
   shiftSchedulePage.getFirstShiftFromList().click({ force: true })
+  cy.wait(1000)
   sidebarSelectors.getActionsButton().click({ force: true })
   cy.selectItemFromDropdownLevel0('Begin cancellation')
   shiftSchedulePage.getCancelOptionRadio().each(($el) => {

@@ -1,16 +1,18 @@
-import { documentName, role } from '../../../../fixtures/fakes'
+import { role } from '../../../../fixtures/fakes'
 import { roleID } from '../APIsettingsCommands/APIrolesCommands'
-import { candidateID } from '../APIcandidatesCommands/APIcandidatesCommands'
+import { candidateIDs } from '../APIcandidatesCommands/APIcandidatesCommands'
 
 const baseAPI = Cypress.env('BASE_API')
 let documentID
 
 // Documents/By Candidate page
-Cypress.Commands.add('APICompliantCandidate', (token) => {
+Cypress.Commands.add('APICompliantCandidate', (token, candidate) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'PATCH',
-    url: `${baseAPI}/candidates/${candidateID}/documents-exclude`,
+    url: `${baseAPI}/candidates/${
+      candidateIDs[candidate.index]
+    }/documents-exclude`,
     body: {
       documents: [
         {
@@ -28,13 +30,13 @@ Cypress.Commands.add('APICompliantCandidate', (token) => {
 export { documentID }
 
 // Documents/Settings page
-Cypress.Commands.add('APICreateDocument', (token) => {
+Cypress.Commands.add('APICreateDocument', (token, document) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
     url: `${baseAPI}/documents`,
     body: {
-      name: documentName,
+      name: document,
       is_required: true,
       has_expiry: true,
       is_hidden: false,

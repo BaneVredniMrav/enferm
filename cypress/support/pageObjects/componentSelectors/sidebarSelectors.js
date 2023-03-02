@@ -14,6 +14,12 @@ class Sidebar {
     return cy.get('.sidebar-form-header > h2', { timeout: 10000 })
   }
 
+  getEditDetailsButton() {
+    return cy.get('.sidebar-form-header > .btn', { timeout: 10000 })
+  }
+
+  //Notes
+
   getNotesField() {
     return cy.get('.notes-submit__textarea', { timeout: 10000 })
   }

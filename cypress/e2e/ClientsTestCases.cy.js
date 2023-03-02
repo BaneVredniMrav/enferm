@@ -1,12 +1,14 @@
 /// <reference types="Cypress" />
 
+import { client1, manager } from '../fixtures/fakes'
+
 let token
 
 before(() => {
   cy.APIAdminLogin().then((response) => {
     let firstToken = response.body.token
     cy.APICreateRegion(firstToken)
-    cy.APICreateUser(firstToken)
+    cy.APICreateUser(firstToken, manager)
   })
 })
 after(() => {
@@ -28,21 +30,21 @@ describe('Test Cases for the Clients page', () => {
 
   it('TC1 - The user is able to create Trust', () => {
     cy.visitClientsPage()
-    cy.createTrust()
+    cy.createTrust(client1, manager)
   })
 
   it('TC2 - The user is able to create Hospital', () => {
     cy.visitClientsPage()
-    cy.createHospital()
+    cy.createHospital(client1, manager)
   })
 
   it('TC3 - The user is able to create Ward', () => {
     cy.visitClientsPage()
-    cy.createWard()
+    cy.createWard(client1, manager)
   })
 
   it('TC4 - The user is able to delete Trust', () => {
     cy.visitClientsPage()
-    cy.deleteTrust()
+    cy.deleteTrust(client1, manager)
   })
 })

@@ -1,18 +1,10 @@
 import CandidatesPage from '../../pageObjects/candidatesSelectors/candidatesPageSelectors'
-import {
-  candidate1,
-  clientName,
-  manager,
-  region,
-  band
-} from '../../../fixtures/fakes'
+import { region, band } from '../../../fixtures/fakes'
 import HttpStatusCode from '../../general/HttpStatusCode'
 import Dropdown from '../../pageObjects/componentSelectors/dropdownSelectors'
 
 const candidatesPage = new CandidatesPage()
 const dropdownSelectors = new Dropdown()
-
-let managerName = `${manager.managerFirstName} ${manager.managerLastName}`
 
 Cypress.Commands.add('interceptCandidatesPageRequests', () => {
   cy.intercept('GET', '/api/v1/temps?*').as('getTemps')
@@ -55,34 +47,34 @@ Cypress.Commands.add('visitCandidatesPage', () => {
     .should('eq', HttpStatusCode.OK)
 })
 
-Cypress.Commands.add('createCandidate', () => {
+Cypress.Commands.add('createCandidate', (candidate, client, manager) => {
   candidatesPage.getNewCandidateButton().click()
-  candidatesPage.getPayrollIDField().type(candidate1.payroll, { force: true })
-  candidatesPage.getNMCPINField().type(candidate1.nmcPIN, { force: true })
+  candidatesPage.getPayrollIDField().type(candidate.payroll, { force: true })
+  candidatesPage.getNMCPINField().type(candidate.nmcPIN, { force: true })
   candidatesPage
     .getFirstNameField()
-    .type(candidate1.candidateFirstName, { force: true })
+    .type(candidate.candidateFirstName, { force: true })
   candidatesPage
     .getLastNameField()
-    .type(candidate1.candidateLastName, { force: true })
-  candidatesPage.getEmailField().type(candidate1.email, { force: true })
+    .type(candidate.candidateLastName, { force: true })
+  candidatesPage.getEmailField().type(candidate.email, { force: true })
   candidatesPage
     .getMobilePhoneField()
-    .type(candidate1.phoneNumber, { force: true })
-  candidatesPage.getAddressField().type(candidate1.address, { force: true })
-  candidatesPage.getCityField().type(candidate1.city, { force: true })
-  candidatesPage.getPostCodeField().type(candidate1.postCode, { force: true })
+    .type(candidate.phoneNumber, { force: true })
+  candidatesPage.getAddressField().type(candidate.address, { force: true })
+  candidatesPage.getCityField().type(candidate.city, { force: true })
+  candidatesPage.getPostCodeField().type(candidate.postCode, { force: true })
   candidatesPage.getEmploymentTypeDropdown().click({ force: true })
   cy.selectItemFromDropdownLevel0('Umbrella')
   candidatesPage.getManagerDropdown().scrollIntoView().click({ force: true })
-  cy.selectItemFromDropdownLevel0(managerName)
+  cy.selectItemFromDropdownLevel0(manager.managerFirstName)
   cy.get('body').type('{esc}')
   candidatesPage.getRegionDropdown().click({ force: true })
   dropdownSelectors.getDropdownArrowLevel0().click({ force: true })
   cy.selectItemFromDropdownLevel1(region)
   cy.get('body').type('{esc}')
   candidatesPage.getClientsDropdown().click({ force: true })
-  cy.selectItemFromDropdownLevel0(clientName)
+  cy.selectItemFromDropdownLevel0(client.trustName)
   cy.get('body').type('{esc}')
   candidatesPage.getRoleDropdown().click({ force: true })
   candidatesPage.getBandDropdown().first().click({ force: true })
@@ -95,15 +87,15 @@ Cypress.Commands.add('createCandidate', () => {
   cy.wait(1000)
   candidatesPage.getDisplayedCandidateEmail().then((text) => {
     const current = text.text().trim()
-    expect(current).to.equal(candidate1.email)
+    expect(current).to.equal(candidate.email)
   })
   candidatesPage.getDisplayedCandidateMPhone().then((text) => {
     const current = text.text().trim()
-    expect(current).to.equal(candidate1.phoneNumber)
+    expect(current).to.equal(candidate.phoneNumber)
   })
 })
 
-Cypress.Commands.add('deleteCandidate', () => {
+Cypress.Commands.add('deleteCandidate', (candidate) => {
   candidatesPage.getDeleteCandidateButton().click({ force: true })
   candidatesPage.getConfirmDeleteCandidateButton().click({ force: true })
   cy.wait('@deleteCandidate')
@@ -115,42 +107,17 @@ Cypress.Commands.add('deleteCandidate', () => {
     .should('be.visible')
     .then((text) => {
       const current = text.text().trim()
-      expect(current).to.not.equal(candidate1.email)
+      expect(current).to.not.equal(candidate.email)
     })
   candidatesPage
     .getDisplayedCandidateMPhone()
     .should('be.visible')
     .then((text) => {
       const current = text.text().trim()
-      expect(current).to.not.equal(candidate1.phoneNumber)
+      expect(current).to.not.equal(candidate.phoneNumber)
     })
 })
 
 Cypress.Commands.add('candidateIsVerified', () => {
   candidatesPage.getVerifiedIcon().should('have.class', 'has-tooltip')
-})
-
-Cypress.Commands.add('visitCandidateOverviewPage', () => {
-  candidatesPage.getCandidateDetailsIcon().click({ force: true })
-  cy.wait('@getProfile')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  cy.wait('@getClients')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  cy.wait('@getAttributes')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  cy.wait('@getUsers')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  cy.wait('@getAgencies')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  cy.wait('@getEmploymentTypes')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
-  cy.wait('@getGrades')
-    .its('response.statusCode')
-    .should('eq', HttpStatusCode.OK)
 })

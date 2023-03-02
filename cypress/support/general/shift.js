@@ -11,7 +11,7 @@ export const ShiftStatuses = {
   InQuery: 10,
   Invoiced: 11,
   CancellationPending: 12,
-  Canceled: 13,
+  Cancelled: 13,
   NeverFilled: 14,
   Completed: 15,
   AmendmentRequired: 16

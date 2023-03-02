@@ -24,8 +24,12 @@ Cypress.on('uncaught:exception', (err) => {
 
 // Import commands.js using ES2015 syntax:
 
+// Component commands
+import './commands/componentCommands/sidebarCommands'
+import './commands/componentCommands/dropdownCommands'
+import './commands/componentCommands/shiftModalCommands'
+
 // UI commands
-import './commands/componentCommands/globalCommands'
 import './commands/loginCommands/loginCommands'
 import './commands/candidatesCommands/candidatesCommands'
 import './commands/candidatesCommands/candidateCalendarCommands'
@@ -56,11 +60,12 @@ import './commands/APIcommands/APIsettingsCommands/APIregionsCommands'
 import './commands/APIcommands/APIsettingsCommands/APIrateSplitsCommands'
 import './commands/APIcommands/APIsettingsCommands/APIrolesCommands'
 import './commands/APIcommands/APIshiftScheduleCommands/APInewShiftCommands'
+import './commands/APIcommands/APIshiftScheduleCommands/APIshiftScheduleCommands'
 import './commands/APIcommands/APIratesCommands/APIratesCommands'
 
 // Candidate Onboarding
-import './commands/candidateOnboarding/onboardingGlobalCommands'
-import './commands/candidateOnboarding/onboardingStepOneCommands'
+import './commands/candidateOnboarding/candidateGlobalOnboardingCommands/onboardingGlobalCommands'
+import './commands/candidateOnboarding/candidateWebOnboardingCommands/onboardingStepOneCommands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

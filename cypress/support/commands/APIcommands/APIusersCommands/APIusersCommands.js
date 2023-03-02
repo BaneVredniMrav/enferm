@@ -1,21 +1,20 @@
-import { manager } from '../../../../fixtures/fakes'
 import { regionID } from '../APIsettingsCommands/APIregionsCommands'
 
 const baseAPI = Cypress.env('BASE_API')
 let managerID
 
 //TODO https://tempestapp.atlassian.net/browse/EN-1884
-Cypress.Commands.add('APICreateUser', (token) => {
+Cypress.Commands.add('APICreateUser', (token, user) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
     url: `${baseAPI}/users/invite?include=role`,
     body: {
-      email: manager.email,
+      email: user.email,
       two_way_enabled: false,
-      first_name: manager.managerFirstName,
-      last_name: manager.managerLastName,
-      mobile_phone: manager.phoneNumber,
+      first_name: user.managerFirstName,
+      last_name: user.managerLastName,
+      mobile_phone: user.phoneNumber,
       role_id: 7,
       is_phone_verified: false,
       notification_methods: [],
@@ -54,4 +53,4 @@ Cypress.Commands.add('APIDeleteUser', (token) => {
   cy.request(options)
 })
 
-export { managerID, regionID }
+export { managerID }

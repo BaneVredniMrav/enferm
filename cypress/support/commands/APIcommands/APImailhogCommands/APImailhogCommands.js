@@ -1,4 +1,4 @@
-import { newPassword, candidate1, manager } from '../../../../fixtures/fakes'
+import { newPassword } from '../../../../fixtures/fakes'
 
 const baseAPI = Cypress.env('BASE_API')
 let invitationLink
@@ -20,10 +20,6 @@ Cypress.Commands.add('APIMailHogLogin', () => {
       .replace('&s', '&s=')
 
     invitationToken = invitationLink.split('/')[4].split('?')[0]
-    console.log(invitationLink)
-    console.log(invitationToken)
-    console.log(candidate1.email)
-    console.log(manager.email)
   })
 })
 
@@ -31,13 +27,13 @@ Cypress.Commands.add('APIGoOnTheSetUpPasswordPage', () => {
   cy.visit(invitationLink)
 })
 
-Cypress.Commands.add('APIManagerVerification', () => {
+Cypress.Commands.add('APIManagerVerification', (user) => {
   let options = {
     method: 'POST',
     url: `${baseAPI}/invite/accept`,
     body: {
       token: invitationToken,
-      email: manager.email,
+      email: user.email,
       password: newPassword,
       password_confirmation: newPassword
     }
@@ -45,13 +41,13 @@ Cypress.Commands.add('APIManagerVerification', () => {
   cy.request(options)
 })
 
-Cypress.Commands.add('APICandidateVerification', () => {
+Cypress.Commands.add('APICandidateVerification', (candidate) => {
   let options = {
     method: 'POST',
     url: `${baseAPI}/invite/accept`,
     body: {
       token: invitationToken,
-      email: candidate1.email,
+      email: candidate.email,
       password: newPassword,
       password_confirmation: newPassword
     }

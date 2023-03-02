@@ -2,7 +2,7 @@ import CandidateCalendarPage from '../../pageObjects/candidatesSelectors/candida
 import CandidatesPage from '../../pageObjects/candidatesSelectors/candidatesPageSelectors'
 import HttpStatusCode from '../../general/HttpStatusCode'
 import Dropdown from '../../pageObjects/componentSelectors/dropdownSelectors'
-import { client1, band } from '../../../fixtures/fakes'
+import { band, getDaysInMonth } from '../../../fixtures/fakes'
 
 const candidatesPage = new CandidatesPage()
 const candidateCalendarPage = new CandidateCalendarPage()
@@ -70,11 +70,14 @@ Cypress.Commands.add('visitCandidateCalendarPage', () => {
 
 Cypress.Commands.add('setCandidateAsAvailable', () => {
   const date = new Date()
-  const tomorrow = date.getDate() + 1
+  let tomorrow = date.getDate() + 1
+  if (getDaysInMonth() < tomorrow) {
+    tomorrow = 1
+    candidateCalendarPage.getNextMonthButton().click({ force: true })
+  }
   candidateCalendarPage
     .getDateFromCalendar()
     .contains(tomorrow)
-    .last()
     .scrollIntoView()
     .click({ force: true })
   candidateCalendarPage.getYesAvailableButton().click({ force: true })
@@ -88,11 +91,13 @@ Cypress.Commands.add('setCandidateAsAvailable', () => {
 
 Cypress.Commands.add('setCandidateAsUnavailable', () => {
   const date = new Date()
-  const tomorrow = date.getDate() + 1
+  let tomorrow = date.getDate() + 1
+  if (getDaysInMonth() < tomorrow) {
+    tomorrow = 1
+  }
   candidateCalendarPage
     .getDateFromCalendar()
     .contains(tomorrow)
-    .last()
     .scrollIntoView()
     .click({ force: true })
   candidateCalendarPage.getNoAvailableButton().click({ force: true })
@@ -101,13 +106,15 @@ Cypress.Commands.add('setCandidateAsUnavailable', () => {
   candidateCalendarPage.getSaveButton().click({ force: true })
 })
 
-Cypress.Commands.add('createShiftRetroactively', (shiftSegment) => {
+Cypress.Commands.add('createShiftRetroactively', (shiftSegment, client) => {
   const date = new Date()
   const yesterday = date.getDate() - 1
+  if (yesterday === 0) {
+    candidateCalendarPage.getPreviousMonthButton().click({ force: true })
+  }
   candidateCalendarPage
     .getDateFromCalendar()
     .contains(yesterday)
-    .last()
     .scrollIntoView()
     .click({ force: true })
   candidateCalendarPage.getAssignShiftOption().click({ force: true })
@@ -118,9 +125,9 @@ Cypress.Commands.add('createShiftRetroactively', (shiftSegment) => {
   candidateCalendarPage.getStatusField().click({ force: true })
   cy.selectItemFromDropdownLevel0('Awaiting candidate')
   candidateCalendarPage.getClientField().click({ force: true })
-  cy.selectItemFromDropdownLevel0(client1.trustName)
-  cy.selectItemFromDropdownLevel1(client1.hospitalName)
-  cy.selectItemFromDropdownLevel2(client1.wardName)
+  cy.selectItemFromDropdownLevel0(client.trustName)
+  cy.selectItemFromDropdownLevel1(client.hospitalName)
+  cy.selectItemFromDropdownLevel2(client.wardName)
   candidateCalendarPage
     .getPONumberField()
     .type(`${yesterday}/${shiftSegment.startTime}`)

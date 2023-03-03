@@ -147,6 +147,7 @@ Cypress.Commands.add('cutAndResetRateSplit', () => {
 
     cy.wrap(canvas).click(canvasCenter, halfOFHalfHeight)
   })
+  cy.wait(1000)
   settingsPage.getDayTimeNameField().its('length').should('eq', 3)
   settingsPage.getResetTimeSplitsButton().click({ force: true })
   settingsPage.getDayTimeNameField().its('length').should('eq', 2)

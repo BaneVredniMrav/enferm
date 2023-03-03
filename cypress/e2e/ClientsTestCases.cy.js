@@ -16,6 +16,7 @@ after(() => {
     let lastToken = response.body.token
     cy.APIDeleteUser(lastToken)
     cy.APIDeleteRegion(lastToken)
+    cy.APIDeleteAllMailMessages()
   })
 })
 

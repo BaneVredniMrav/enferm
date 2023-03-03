@@ -7,7 +7,7 @@ Cypress.Commands.add('APICancelRetroactivelyShift', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'PUT',
-    url: `${baseAPI}/jobs/${retroactivelyShiftID}/cancel`,
+    url: `${baseAPI}/v1/jobs/${retroactivelyShiftID}/cancel`,
     body: {
       cancellation_reason_id: 16,
       note: 'Shift cancelled by Cypress API request'
@@ -23,7 +23,7 @@ Cypress.Commands.add('APICancelRegularShift', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'PUT',
-    url: `${baseAPI}/jobs/${shiftID}/cancel`,
+    url: `${baseAPI}/v1/jobs/${shiftID}/cancel`,
     body: {
       cancellation_reason_id: 16,
       note: 'Shift cancelled by Cypress API request'
@@ -52,7 +52,7 @@ Cypress.Commands.add('APISignOffShift', (token, shiftSegment) => {
     let authorization = `bearer ${token}`
     let options = {
       method: 'POST',
-      url: `${baseAPI}/jobs/${retroactivelyShiftID}/sign-off`,
+      url: `${baseAPI}/v1/jobs/${retroactivelyShiftID}/sign-off`,
       body: formData,
       headers: {
         'Content-Type': 'multipart/form-data, application/json',

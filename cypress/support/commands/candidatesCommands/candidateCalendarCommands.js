@@ -117,7 +117,10 @@ Cypress.Commands.add('createShiftRetroactively', (shiftSegment, client) => {
     .contains(yesterday)
     .scrollIntoView()
     .click({ force: true })
-  candidateCalendarPage.getAssignShiftOption().click({ force: true })
+  candidateCalendarPage
+    .getAssignShiftOption()
+    .scrollIntoView()
+    .click({ force: true })
   candidateCalendarPage.getStartTimeField().click({ force: true })
   cy.selectItemFromDropdownLevel0(shiftSegment.startTime)
   candidateCalendarPage.getEndTimeField().click({ force: true })

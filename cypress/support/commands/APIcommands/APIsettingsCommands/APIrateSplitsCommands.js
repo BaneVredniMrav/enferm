@@ -9,14 +9,27 @@ const baseAPI = Cypress.env('BASE_API')
 let trustRateSplitsIDs = []
 let hospitalRateSplitsIDs = []
 let wardRateSplitsIDs = []
+let inheritIDs = []
 
-//TODO After refreshing DEV database the Trust inherit IDs should be changed into 1 and 2
-//TODO Adapt request to both env STAGE, DEV because inherit_id is different
+Cypress.Commands.add('getInheritIDs', (token) => {
+  let authorization = `bearer ${token}`
+  let options1 = {
+    method: 'GET',
+    url: `${baseAPI}/v1/day-times`,
+    headers: {
+      authorization
+    }
+  }
+  cy.request(options1).then((response) => {
+    inheritIDs.push(response.body.data[0].id, response.body.data[1].id)
+  })
+})
+
 Cypress.Commands.add('APIcreateTrustRateSplit', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/day-times`,
+    url: `${baseAPI}/v1/day-times`,
     body: {
       client_id: trustIDs[client.index],
       segments: [
@@ -24,13 +37,13 @@ Cypress.Commands.add('APIcreateTrustRateSplit', (token, client) => {
           name: `${client.trustName} Day`,
           from: `${rateSplits.day}:00`,
           to: `${rateSplits.night}:00`,
-          inherit_id: 117
+          inherit_id: inheritIDs[0]
         },
         {
           name: `${client.trustName} Night`,
           from: `${rateSplits.night}:00`,
           to: `${rateSplits.day}:00`,
-          inherit_id: 118
+          inherit_id: inheritIDs[1]
         }
       ]
     },
@@ -48,7 +61,7 @@ Cypress.Commands.add('APIcreateHospitalRateSplit', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/day-times`,
+    url: `${baseAPI}/v1/day-times`,
     body: {
       client_id: hospitalIDs[client.index],
       segments: [
@@ -82,7 +95,7 @@ Cypress.Commands.add('APIcreateWardRateSplit', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/day-times`,
+    url: `${baseAPI}/v1/day-times`,
     body: {
       client_id: wardIDs[client.index],
       segments: [

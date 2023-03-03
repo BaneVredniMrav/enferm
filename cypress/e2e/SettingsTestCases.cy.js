@@ -46,6 +46,7 @@ describe('Test Cases for the Rate Splits page', () => {
       cy.APIDeleteRole(lastToken)
       cy.APIDeleteBand(lastToken)
       cy.APIDeleteRegion(lastToken)
+      cy.APIDeleteAllMailMessages()
     })
   })
   beforeEach(() => {

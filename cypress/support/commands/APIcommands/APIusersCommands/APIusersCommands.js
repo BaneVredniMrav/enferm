@@ -8,7 +8,7 @@ Cypress.Commands.add('APICreateUser', (token, user) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/users/invite?include=role`,
+    url: `${baseAPI}/v1/users/invite?include=role`,
     body: {
       email: user.email,
       two_way_enabled: false,
@@ -45,7 +45,7 @@ Cypress.Commands.add('APIDeleteUser', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/users/${managerID}`,
+    url: `${baseAPI}/v1/users/${managerID}`,
     headers: {
       authorization
     }

@@ -7,83 +7,75 @@ class OnboardingStepFourPage {
     return cy.get('', { timeout: 10000 })
   }
 
-  //CV
+  //Reference 1
 
-  getCVField() {
+  getReferenceOneFirstNameField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //BRP
-
-  getFrontCoverPictureField() {
+  getReferenceOneLastNameField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getBackCoverPictureField() {
+  getReferenceOneEmailField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //International Police Check
-
-  getInternationalPolicePictureField() {
+  getReferenceOnePhoneNumberField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Degree Certificate
-
-  getDegreeCertificateField() {
+  getReferenceOneHospitalField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Immunisation Reports
-
-  getImmunisationReportsPicture() {
+  getReferenceOneEmploymentStart_EndTime() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Covid History
+  //Reference 2
 
-  getCovidHistoryPictureField() {
+  getReferenceTwoFirstNameField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Indemnity Insurance
-
-  getIndemnityInsurancePictureField() {
+  getReferenceTwoLastNameField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //NI Card
-
-  getP60PictureField() {
+  getReferenceTwoEmailField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //IV Certificate
-
-  getIVCertificatePicture() {
+  getReferenceTwoPhoneNumberField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Cannulation
-
-  getCannulationReportPictureField() {
+  getReferenceTwoHospitalField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Venepuncture
-
-  getVenepunctureReportPictureField() {
+  getReferenceTwoEmploymentStart_EndTime() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Woohoo Page
+  //Schedule Intetrview
 
-  getIUndersuandButton() {
+  getWhatDateAvailableField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getWhooHooSection() {
+  getWhatTimeDropdown() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  //Ready To Roll Page
+
+  getDoneButton() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getCongratulationsSection() {
     return cy.get('', { timeout: 10000 })
   }
 }

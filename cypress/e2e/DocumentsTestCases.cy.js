@@ -33,6 +33,7 @@ after(() => {
     cy.APIDeleteBand(lastToken)
     cy.APIDeleteRole(lastToken)
     cy.APIDeleteRegion(lastToken)
+    cy.APIDeleteAllMailMessages()
   })
 })
 

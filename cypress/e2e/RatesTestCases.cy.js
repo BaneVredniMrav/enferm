@@ -27,6 +27,7 @@ after(() => {
     cy.APIDeleteRole(lastToken)
     cy.APIDeleteBand(lastToken)
     cy.APIDeleteRegion(lastToken)
+    cy.APIDeleteAllMailMessages()
   })
 })
 
@@ -47,6 +48,7 @@ describe('Test Cases for the Rates page', () => {
 
   it('TC2 - The user is able to create specific candidate rate assigned to the Trust', () => {
     cy.visitRatesPage()
+    cy.getInheritIDs(token)
     cy.APIcreateTrustRateSplit(token, client1)
     cy.createSpecificCandidateTrustRate(client1, candidate1)
     cy.deleteRate()

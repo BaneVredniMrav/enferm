@@ -11,7 +11,7 @@ Cypress.Commands.add('APICreateTrust', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/clients`,
+    url: `${baseAPI}/v1/clients`,
     body: {
       name: client.trustName,
       address_1: client.address,
@@ -54,7 +54,7 @@ Cypress.Commands.add('APICreateHospital', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/clients`,
+    url: `${baseAPI}/v1/clients`,
     body: {
       name: client.hospitalName,
       address_1: client.address,
@@ -98,7 +98,7 @@ Cypress.Commands.add('APICreateWard', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/clients`,
+    url: `${baseAPI}/v1/clients`,
     body: {
       name: client.wardName,
       address_1: client.address,
@@ -142,7 +142,7 @@ Cypress.Commands.add('APIDeleteTrust', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/clients/${trustIDs[client.index]}`,
+    url: `${baseAPI}/v1/clients/${trustIDs[client.index]}`,
     headers: {
       authorization
     }
@@ -154,7 +154,7 @@ Cypress.Commands.add('APIDeleteHospital', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/clients/${hospitalIDs[client.index]}`,
+    url: `${baseAPI}/v1/clients/${hospitalIDs[client.index]}`,
     headers: {
       authorization
     }
@@ -166,11 +166,12 @@ Cypress.Commands.add('APIDeleteWard', (token, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/clients/${wardIDs[client.index]}`,
+    url: `${baseAPI}/v1/clients/${wardIDs[client.index]}`,
     headers: {
       authorization
     }
   }
+  cy.wait(1000)
   cy.request(options)
 })
 

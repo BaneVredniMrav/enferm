@@ -20,7 +20,7 @@ Cypress.Commands.add(
     let authorization = `bearer ${token}`
     let options = {
       method: 'POST',
-      url: `${baseAPI}/job-requests?include=users`,
+      url: `${baseAPI}/v1/job-requests?include=users`,
       body: {
         push_interval: null,
         note: null,
@@ -62,7 +62,7 @@ Cypress.Commands.add(
     cy.request(options)
     let options1 = {
       method: 'GET',
-      url: `${baseAPI}/jobs?page=1&order_by=ID&sort_by=desc&include=client,jobRequest.jobType,user,signOff,signOff.user,invoice&date_interval=jobs.date_all_time`,
+      url: `${baseAPI}/v1/jobs?page=1&order_by=ID&sort_by=desc&include=client,jobRequest.jobType,user,signOff,signOff.user,invoice&date_interval=jobs.date_all_time`,
       headers: {
         authorization
       }

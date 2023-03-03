@@ -26,6 +26,7 @@ after(() => {
     cy.APIDeleteRole(lastToken)
     cy.APIDeleteBand(lastToken)
     cy.APIDeleteRegion(lastToken)
+    cy.APIDeleteAllMailMessages()
   })
 })
 

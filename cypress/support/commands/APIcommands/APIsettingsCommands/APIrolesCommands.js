@@ -7,7 +7,7 @@ Cypress.Commands.add('APICreateRole', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/job-types`,
+    url: `${baseAPI}/v1/job-types`,
     body: {
       name: role
     },
@@ -24,7 +24,7 @@ Cypress.Commands.add('APIDeleteRole', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/job-types/${roleID}`,
+    url: `${baseAPI}/v1/job-types/${roleID}`,
     headers: {
       authorization
     }

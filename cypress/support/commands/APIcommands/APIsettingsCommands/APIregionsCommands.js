@@ -7,7 +7,7 @@ Cypress.Commands.add('APICreateRegion', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/sub-agencies`,
+    url: `${baseAPI}/v1/sub-agencies`,
     body: {
       name: region
     },
@@ -24,11 +24,12 @@ Cypress.Commands.add('APIDeleteRegion', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/sub-agencies/${regionID}`,
+    url: `${baseAPI}/v1/sub-agencies/${regionID}`,
     headers: {
       authorization
     }
   }
+  cy.wait(1000)
   cy.request(options)
 })
 

@@ -46,6 +46,7 @@ after(() => {
     cy.APIDeleteBand(lastToken)
     cy.APIDeleteRole(lastToken)
     cy.APIDeleteRegion(lastToken)
+    cy.APIDeleteAllMailMessages()
   })
 })
 
@@ -71,6 +72,7 @@ describe('Test Cases related to the shift', () => {
       cy.APICreateTrust(firstToken, client2)
       cy.APICreateHospital(firstToken, client2)
       cy.APICreateWard(firstToken, client2)
+      cy.getInheritIDs(firstToken)
       cy.APIcreateTrustRateSplit(firstToken, client2)
       cy.APIcreateHospitalRateSplit(firstToken, client2)
       cy.APIcreateWardRateSplit(firstToken, client2)
@@ -92,7 +94,7 @@ describe('Test Cases related to the shift', () => {
     })
   })
 
-  it.only('TC1 - The user is able to create long day shift regular, edit and cancel Booked shift', () => {
+  it('TC1 - The user is able to create long day shift regular, edit and cancel Booked shift', () => {
     let availabilitySegment = AvailabilitySegments.LongDay
     let longDayShiftSegment = ShiftSegments.LongDay
     cy.APISetCandidateAsAvailable(token, candidate1, availabilitySegment)
@@ -104,7 +106,7 @@ describe('Test Cases related to the shift', () => {
     cy.cancelShift()
   })
 
-  it.only('TC2 - The user is able to sign off shift as mobile user, edit and cancel Awaiting Agency shift', () => {
+  it('TC2 - The user is able to sign off shift as mobile user, edit and cancel Awaiting Agency shift', () => {
     let longDayShiftSegment = ShiftSegments.LongDay
     cy.APICreateShiftRetroactively(
       token,

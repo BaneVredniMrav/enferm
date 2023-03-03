@@ -7,189 +7,447 @@ class OnboardingStepThreePage {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Passport
+  //Health Questionnaire - GP Address
 
-  getPassportNumberField() {
+  getGPAddressField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getNationalityDropdown() {
+  getGPCityField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getFrontCoverPhotoField() {
+  getGPPostCodeField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDataPagePhotoField() {
+  getGPCountryDropdown() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getPassportPhotoField() {
+  //Medical History
+
+  getHaveAnyDisabilityRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getPassportExpiryDateField() {
+  getEverHadAnyDisabilityRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Immigration Status
-
-  getShareCodeField() {
+  getHavingTreatmentRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getHaveBRPRadio() {
+  getNeedAdjustmentsRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getBRPNumberField() {
+  getHaveSufferedMRSARadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getBRPExpiryDateField() {
+  getProvideMRSADateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //TODO check is design correct because missing Visa?
-
-  //DBS
-
-  getRegisteredForDBSRadio() {
+  getProvideMRSAReasonField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getAddress5YearProofDropdown() {
+  getHaveSufferedC_DiffRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getProofOfAddressIssueDateField() {
+  getProvideC_DiffDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getProofOfAddressPhotoField() {
+  getProvideC_DiffReasonField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getHaveOriginalCertificateRadio() {
+  //Chicken Pox or Shingles
+
+  getEverHadChickenPoxRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getOriginalCertificateField() {
+  getChickenPoxDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDBSProviderField() {
+  //BBV (Blood Borne Virus)
+
+  getContactWithBBVRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDBSNumberField() {
+  //Tuberculosis
+
+  getLivedOutsideUKRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDBSExpiryDateField() {
+  getSelectCountryDropdown() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Criminal Background
-
-  getConvictedRadio() {
+  getDurationOfStayField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDetailsAboutConvictionField() {
+  getAddNewCountryButton() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDBSAlertRadio() {
+  getHadBCGVaccinationRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDBSAlertReasonField() {
+  getBCGDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getInvestigationRadio() {
+  getCoughMoreThan3WeeksRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getReasonForInvestigationField() {
+  getCoughMoreThan3WeeksField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDismissedRadio() {
+  getHaveUnexplainedWeightLossRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getReasonForDismissalField() {
+  getWeightLossField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Tax Details
-
-  getPAYERadio() {
+  getUnexplainedFeverRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getUmbrellaRadio() {
+  getUnexplainedFeverField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getHMRCStandardChecklistField() {
+  getHadTBRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Training
-
-  getMandatoryInLast12MonthsRadio() {
+  getTBField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getMandatoryTrainingProviderField() {
+  //Immunisation History
+
+  getHadTripleVaccinationRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getMandatoryTrainingExpiryDate() {
+  getTripleVaccinationDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getSupportInLast12MonthsRadio() {
+  getHaveHadPolioRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getSupportInLast12MonthsField() {
+  getPolioDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getBLSCheckbox() {
+  getHaveHadTetanusRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getILSCheckbox() {
+  getTetanusDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getPLSCheckbox() {
+  getHaveHadHepatitisBRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getNLSCheckbox() {
+  getHepatitisBDateOfCourse1Field() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getALSCheckbox() {
+  getHepatitisBDateOfCourse2Field() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getATLSCheckbox() {
+  getHepatitisBDateOfCourse3Field() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getLifeSupportProviderField() {
+  getHepatitisBDateOfBooster1Field() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getLifeSupportExpiryDate() {
+  getHepatitisBDateOfBooster2Field() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getHepatitisBDateOfBooster3Field() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  //Exposure Prone Procedures
+
+  getExposureProneProceduresRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  //UK General Data Protection Regulation (UK GDPR)
+
+  getGuideToDataProtectionField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getPrivacyPolicyRequestMailLink() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  //Consent
+
+  getConsentAssessedRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getConsentSpeakingRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getConsentMakingRecommendationsRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  //Declaration
+
+  getInformEmployerCheckbox() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  // //COVID-19 Risk Assessment
+
+  getJobTitleField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  //COVID Risk Factor
+
+  getGenderRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getAgeRadios() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getIdentifyAsBAMERadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getWorkOnCOVID19WardsRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getFitMaskTestedRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getFitMaskField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getHadCOVID19VaccinationRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getCOVID19VaccinationDateField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getCOVID19StageOfCourseDropdown() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getHadYearlyInfluenzaRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getHaveShieldingLetterRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getShieldingLetterField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferedFromCOVID19SystemsRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getCOVID19SystemsField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getCOVID19SystemsDateField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getPregnantRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getDeliveryDateField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getHowManyWeeksPregnantDateField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromAsthmaRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getMildOrSevereAsthmaRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getAsthmaField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromDiabetesRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getDiabetesTypeRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getDiabetesField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getControlledOrUncontrolledDiabetesRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromHighBloodPressureRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getHighBloodPressureField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromHeartFailureRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getHeartFailureField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromOtherHeartDiseaseRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getOtherHeartDiseaseField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromCerebrovascularRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getCerebrovascularField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromChronicRespiratoryDiseaseRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getChronicRespiratoryDiseaseField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromChronicKidneyDiseaseRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getChronicKidneyDiseaseField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromCancerRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getCancerField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromMalignancyRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getMalignancyField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSufferFromLiverDiseaseRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getLiverDiseaseField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getBMIField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getHaveAnyConcernsField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getCalculateBMIField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getShareRiskAssessmentRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  // //Working Time Regulations
+
+  getAcceptCompanyProposalRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  // //Declaration
+
+  getDownloadCompanyHandBookField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getFullNameField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSignatureField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getDateField() {
     return cy.get('', { timeout: 10000 })
   }
 }

@@ -21,7 +21,7 @@ Cypress.Commands.add('APICreateCandidate', (token, candidate, client) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/users/invite`,
+    url: `${baseAPI}/v1/users/invite`,
     body: {
       email: candidate.email,
       first_name: candidate.candidateFirstName,
@@ -99,7 +99,7 @@ Cypress.Commands.add('APIDeleteCandidate', (token, candidate) => {
 
   cy.request({
     method: 'DELETE',
-    url: `${baseAPI}/users/${candidateIDs[candidate.index]}`,
+    url: `${baseAPI}/v1/users/${candidateIDs[candidate.index]}`,
     headers: {
       authorization
     }
@@ -118,7 +118,7 @@ Cypress.Commands.add(
     let authorization = `bearer ${token}`
     let options = {
       method: 'POST',
-      url: `${baseAPI}/availabilities`,
+      url: `${baseAPI}/v1/availabilities`,
       body: {
         dates: [
           {
@@ -149,7 +149,7 @@ Cypress.Commands.add(
     let authorization = `bearer ${token}`
     let options = {
       method: 'POST',
-      url: `${baseAPI}/leave-requests/`,
+      url: `${baseAPI}/v1/leave-requests/`,
       body: {
         reason: reason,
         dates: [tomorrow],
@@ -175,7 +175,7 @@ Cypress.Commands.add(
     let authorization = `bearer ${token}`
     let options = {
       method: 'POST',
-      url: `${baseAPI}/temps/${candidateIDs[candidate.index]}/jobs`,
+      url: `${baseAPI}/v1/temps/${candidateIDs[candidate.index]}/jobs`,
       body: {
         agency_id: regionID,
         user_id: candidateIDs[candidate.index],
@@ -201,7 +201,7 @@ Cypress.Commands.add(
     cy.request(options)
     let options1 = {
       method: 'GET',
-      url: `${baseAPI}/jobs?page=1&order_by=ID&sort_by=desc&include=client,jobRequest.jobType,user,signOff,signOff.user,invoice&date_interval=jobs.date_all_time`,
+      url: `${baseAPI}/v1/jobs?page=1&order_by=ID&sort_by=desc&include=client,jobRequest.jobType,user,signOff,signOff.user,invoice&date_interval=jobs.date_all_time`,
       headers: {
         authorization
       }

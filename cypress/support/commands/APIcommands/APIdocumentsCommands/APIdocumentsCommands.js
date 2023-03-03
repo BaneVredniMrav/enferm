@@ -10,7 +10,7 @@ Cypress.Commands.add('APICompliantCandidate', (token, candidate) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'PATCH',
-    url: `${baseAPI}/candidates/${
+    url: `${baseAPI}/v1/candidates/${
       candidateIDs[candidate.index]
     }/documents-exclude`,
     body: {
@@ -34,7 +34,7 @@ Cypress.Commands.add('APICreateDocument', (token, document) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/documents`,
+    url: `${baseAPI}/v1/documents`,
     body: {
       name: document,
       is_required: true,
@@ -63,7 +63,7 @@ Cypress.Commands.add('APIDeleteDocument', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/documents/${documentID}`,
+    url: `${baseAPI}/v1/documents/${documentID}`,
     headers: {
       authorization
     }

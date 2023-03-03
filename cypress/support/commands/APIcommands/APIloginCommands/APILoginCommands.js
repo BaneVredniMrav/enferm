@@ -1,4 +1,4 @@
-import { candidate1, newPassword } from '../../../../fixtures/fakes'
+import { newPassword } from '../../../../fixtures/fakes'
 
 const baseAPI = Cypress.env('BASE_API')
 const username = Cypress.env('USERNAME')
@@ -7,7 +7,7 @@ const password = Cypress.env('PASSWORD')
 Cypress.Commands.add('APIAdminLogin', () => {
   const options = {
     method: 'POST',
-    url: `${baseAPI}/auth/login`,
+    url: `${baseAPI}/v1/auth/login`,
     body: {
       email: username,
       password: password,
@@ -22,7 +22,7 @@ Cypress.Commands.add('APIAdminLogin', () => {
 Cypress.Commands.add('APICandidateLogin', (candidate) => {
   const options = {
     method: 'POST',
-    url: `${baseAPI}/auth/login`,
+    url: `${baseAPI}/v1/auth/login`,
     body: {
       email: candidate.email,
       password: newPassword
@@ -37,7 +37,7 @@ Cypress.Commands.add('APILogout', (token) => {
   let authorization = `bearer ${token}`
   const options = {
     method: 'POST',
-    url: `${baseAPI}/auth/logout`,
+    url: `${baseAPI}/v1/auth/logout`,
     headers: {
       authorization
     }

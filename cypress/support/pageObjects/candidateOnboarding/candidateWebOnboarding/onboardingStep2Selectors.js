@@ -7,133 +7,151 @@ class OnboardingStepTwoPage {
     return cy.get('', { timeout: 10000 })
   }
 
-  getProfileIcon() {
+  //Passport
+
+  getPassportNumberField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getFreezeOption() {
+  getNationalityDropdown() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getLogoutOption() {
+  getPassportExpiryDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Freeze
+  //Immigration Status
 
-  getFreezeMyApplicationButton() {
+  getShareCodeField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getCancelFreezeButton() {
+  getHaveBRPRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Address
-
-  getAddressField() {
+  getBRPNumberField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getCityField() {
+  getBRPExpiryDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getPostCodeFiled() {
+  //DBS
+
+  getRegisteredForDBSRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getCountryDropdown() {
+  getAddress5YearProofDropdown() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Phone Number
-
-  getHomePhoneNumberField() {
+  getProofOfAddressIssueDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getWorkPhoneNumberField() {
+  getHaveOriginalCertificateRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDontHaveHomePhoneCheckbox() {
+  getDBSProviderField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDontHaveWorkPhoneCheckbox() {
+  getDBSNumberField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Emergency Contact Details
-
-  getEmergencyFirstNameField() {
+  getDBSExpiryDateField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getEmergencyLastNameField() {
+  //Criminal Background
+
+  getConvictedRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getEmergencyEmailField() {
+  getDetailsAboutConvictionField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getEmergencyPhoneField() {
+  getDBSAlertRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getEmergencyRelationshipDropdown() {
+  getDBSAlertReasonField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //NMC / HCPC
-
-  getNMC_HCPCNumberField() {
+  getInvestigationRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getStatementOfEntryField() {
+  getReasonForInvestigationField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getNMC_HCPCExpiryDateField() {
+  getDismissedRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getRevalidationExpiryDateField() {
+  getReasonForDismissalField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getRegisteredToAUnionRadio() {
+  //Tax Details
+
+  getPAYERadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Insurance
-
-  getNationalInsuranceNumberField() {
+  getUmbrellaRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  getDateOfBirthField() {
+  getUesAnyOfFollowingCompaniesDropdown() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Employment Checks
-
-  getEmploymentChecksCheckbox() {
+  getWriteNameOfCompanyField() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //GDPR & Data Policy
+  //Training
 
-  getGDPR_DatePolicyCheckbox() {
+  getMandatoryInLast12MonthsRadio() {
     return cy.get('', { timeout: 10000 })
   }
 
-  //Data Protection / Access to Records
+  getWantToBookMandatoryTrainingRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
 
-  getDataProtection_AccessToRecordsCheckbox() {
+  getMandatoryTrainingProviderField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getMandatoryTrainingExpiryDate() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getSupportInLast12MonthsRadio() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getLifeSupportTypesCheckboxes() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getLifeSupportProviderField() {
+    return cy.get('', { timeout: 10000 })
+  }
+
+  getLifeSupportExpiryDate() {
     return cy.get('', { timeout: 10000 })
   }
 

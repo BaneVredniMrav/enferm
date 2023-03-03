@@ -7,7 +7,7 @@ Cypress.Commands.add('APICreateBand', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/grades`,
+    url: `${baseAPI}/v1/grades`,
     body: {
       name: band,
       level: 4
@@ -25,7 +25,7 @@ Cypress.Commands.add('APIDeleteBand', (token) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/grades/${bandID}`,
+    url: `${baseAPI}/v1/grades/${bandID}`,
     headers: {
       authorization
     }

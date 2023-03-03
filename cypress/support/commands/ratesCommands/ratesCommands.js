@@ -46,7 +46,9 @@ Cypress.Commands.add('visitRatesPage', () => {
   cy.wait('@getDayTimes')
     .its('response.statusCode')
     .should('eq', HttpStatusCode.OK)
-  cy.wait('@getJobTypes').its('response.statusCode').should('eq', 200)
+  cy.wait('@getJobTypes')
+    .its('response.statusCode')
+    .should('eq', HttpStatusCode.OK)
   cy.wait('@getEmploymentTypes')
     .its('response.statusCode')
     .should('eq', HttpStatusCode.OK)
@@ -56,7 +58,7 @@ Cypress.Commands.add('visitRatesPage', () => {
 })
 
 Cypress.Commands.add('createTrustRate', (client) => {
-  cy.wait(1500)
+  cy.wait(2000)
   ratesPage.getNewRateButton().click({ force: true })
   cy.wait('@getSidebarClients')
     .its('response.statusCode')
@@ -98,7 +100,7 @@ Cypress.Commands.add('createTrustRate', (client) => {
 Cypress.Commands.add(
   'createSpecificCandidateTrustRate',
   (client, candidate) => {
-    cy.wait(1500)
+    cy.wait(2000)
     ratesPage.getNewRateButton().click({ force: true })
     cy.wait('@getSidebarClients')
       .its('response.statusCode')
@@ -161,7 +163,7 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   'createSpecificCandidateHospitalRate',
   (client, candidate) => {
-    cy.wait(1500)
+    cy.wait(2000)
     ratesPage.getNewRateButton().click({ force: true })
     cy.wait('@getSidebarClients')
       .its('response.statusCode')
@@ -228,7 +230,7 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add('createSpecificCandidateWardRate', (client, candidate) => {
-  cy.wait(1500)
+  cy.wait(2000)
   ratesPage.getNewRateButton().click({ force: true })
   cy.wait('@getSidebarClients')
     .its('response.statusCode')
@@ -297,7 +299,7 @@ Cypress.Commands.add('createSpecificCandidateWardRate', (client, candidate) => {
 })
 
 Cypress.Commands.add('deleteRate', () => {
-  cy.wait(1000)
+  cy.wait(2000)
   ratesPage.getRateInTheTable().last().click({ force: true })
   cy.wait(1000)
   sidebarSelectors.getActionsButton().should('be.visible').click()

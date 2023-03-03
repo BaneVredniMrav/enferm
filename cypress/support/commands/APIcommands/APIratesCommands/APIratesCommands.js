@@ -26,7 +26,7 @@ Cypress.Commands.add('APICreateTrustRate', (token, client, rateSplitIndex) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/pay-rates`,
+    url: `${baseAPI}/v1/pay-rates`,
     body: {
       grades: [
         {
@@ -65,7 +65,7 @@ Cypress.Commands.add('APICreateTrustRate', (token, client, rateSplitIndex) => {
   cy.request(options)
   let options1 = {
     method: 'GET',
-    url: `${baseAPI}/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
+    url: `${baseAPI}/v1/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
     headers: {
       authorization
     }
@@ -81,7 +81,7 @@ Cypress.Commands.add(
     let authorization = `bearer ${token}`
     let options = {
       method: 'POST',
-      url: `${baseAPI}/pay-rates`,
+      url: `${baseAPI}/v1/pay-rates`,
       body: {
         grades: [
           {
@@ -120,7 +120,7 @@ Cypress.Commands.add(
     cy.request(options)
     let options1 = {
       method: 'GET',
-      url: `${baseAPI}/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
+      url: `${baseAPI}/v1/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
       headers: {
         authorization
       }
@@ -135,7 +135,7 @@ Cypress.Commands.add('APICreateWardRate', (token, client, rateSplitIndex) => {
   let authorization = `bearer ${token}`
   let options = {
     method: 'POST',
-    url: `${baseAPI}/pay-rates`,
+    url: `${baseAPI}/v1/pay-rates`,
     body: {
       grades: [
         {
@@ -174,7 +174,7 @@ Cypress.Commands.add('APICreateWardRate', (token, client, rateSplitIndex) => {
   cy.request(options)
   let options1 = {
     method: 'GET',
-    url: `${baseAPI}/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
+    url: `${baseAPI}/v1/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
     headers: {
       authorization
     }
@@ -190,7 +190,7 @@ Cypress.Commands.add(
     let authorization = `bearer ${token}`
     let options = {
       method: 'POST',
-      url: `${baseAPI}/pay-rates`,
+      url: `${baseAPI}/v1/pay-rates`,
       body: {
         grades: [
           {
@@ -234,7 +234,7 @@ Cypress.Commands.add(
     cy.request(options)
     let options1 = {
       method: 'GET',
-      url: `${baseAPI}/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
+      url: `${baseAPI}/v1/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
       headers: {
         authorization
       }
@@ -251,7 +251,7 @@ Cypress.Commands.add(
     let authorization = `bearer ${token}`
     let options = {
       method: 'POST',
-      url: `${baseAPI}/pay-rates`,
+      url: `${baseAPI}/v1/pay-rates`,
       body: {
         grades: [
           {
@@ -295,7 +295,7 @@ Cypress.Commands.add(
     cy.request(options)
     let options1 = {
       method: 'GET',
-      url: `${baseAPI}/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
+      url: `${baseAPI}/v1/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
       headers: {
         authorization
       }
@@ -312,7 +312,7 @@ Cypress.Commands.add(
     let authorization = `bearer ${token}`
     let options = {
       method: 'POST',
-      url: `${baseAPI}/pay-rates`,
+      url: `${baseAPI}/v1/pay-rates`,
       body: {
         grades: [
           {
@@ -356,7 +356,7 @@ Cypress.Commands.add(
     cy.request(options)
     let options1 = {
       method: 'GET',
-      url: `${baseAPI}/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
+      url: `${baseAPI}/v1/pay-rates?page=1&order_by=id&sort_by=desc&include=client,client.day_times,job_type,grade,day_time,client,employment_type,user&type=current`,
       headers: {
         authorization
       }
@@ -372,7 +372,7 @@ Cypress.Commands.add('APIDeleteRate', (token, rateIDIndex) => {
 
   let options = {
     method: 'DELETE',
-    url: `${baseAPI}/pay-rates/${ratesIDs[rateIDIndex]}`,
+    url: `${baseAPI}/v1/pay-rates/${ratesIDs[rateIDIndex]}`,
     headers: {
       authorization
     }
